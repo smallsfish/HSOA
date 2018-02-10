@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="performance-web:war">
+    <output-path>$PROJECT_DIR$/hserp/performance-web/target</output-path>
+    <root id="archive" name="performance-web.war">
+      <element id="artifact" artifact-name="performance-web:war exploded" />
+    </root>
+  </artifact>
+</component>

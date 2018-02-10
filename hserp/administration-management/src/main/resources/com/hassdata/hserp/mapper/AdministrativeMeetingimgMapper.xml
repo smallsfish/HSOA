@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hassdata.hserp.dao.AdministrativeMeetingimgMapper">
+  <resultMap id="BaseResultMap" type="com.hassdata.hserp.po.AdministrativeMeetingimg">
+    <id column="img_id" jdbcType="INTEGER" property="imgId" />
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+  </resultMap>
+  <sql id="administrative_meetingImgColumns">
+    <![CDATA[ img_id,id,img ]]>
+  </sql>
+  <sql id="administrative_meetingImgDynamicWhere">
+    <where>
+      <if test="null != imgId and '' !=  imgId">and img_id = #{ imgId}</if>
+      <if test="null != id and '' !=  id">and id = #{ id}</if>
+      <if test="null != img and '' !=  img">and img = #{ img}</if>
+	</where>
+  </sql>
+  <sql id="administrative_meetingImgDynamicLikeWhere">
+    <where>
+      <if test="null != imgId and '' !=  imgId">and img_id LIKE #{ imgId}</if>
+      <if test="null != id and '' !=  id">and id LIKE #{ id}</if>
+      <if test="null != img and '' !=  img">and img LIKE #{ img}</if>
+	</where>
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="administrative_meetingImgColumns" /> from  administrative_meetingImg where img_id = #{imgId}
+  </select>
+  <select id="getOne" parameterType="com.hassdata.hserp.po.AdministrativeMeetingimg" resultMap="BaseResultMap">
+    select <include refid="administrative_meetingImgColumns" /> from  administrative_meetingImg <include refid="administrative_meetingImgDynamicWhere" /> limit 0 , 1
+  </select>
+  <select id="list" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="administrative_meetingImgColumns" /> from  administrative_meetingImg <include refid="administrative_meetingImgDynamicWhere" />
+	<if test="orderBy != null and orderBy != ''">
+          order by ${orderBy}
+      </if>
+  </select>
+  <select id="listPage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="administrative_meetingImgColumns" /> from  administrative_meetingImg <include refid="administrative_meetingImgDynamicWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="listLikePage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="administrative_meetingImgColumns" /> from  administrative_meetingImg <include refid="administrative_meetingImgDynamicLikeWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="countLike" parameterType="com.hassdata.hserp.po.AdministrativeMeetingimg" resultType="java.lang.Long">
+    select count(1) from administrative_meetingImg <include refid="administrative_meetingImgDynamicLikeWhere" />
+  </select>
+  <select id="count" parameterType="com.hassdata.hserp.po.AdministrativeMeetingimg" resultType="java.lang.Long">
+    select count(1) from administrative_meetingImg <include refid="administrative_meetingImgDynamicWhere" />
+  </select>
+  <sql id="save_administrative_meetingImg_columns">
+    insert into administrative_meetingImg(
+		id ,img
+	) values
+  </sql>
+  <sql id="save_administrative_meetingImg_values">
+    (
+	  #{ id,jdbcType=INTEGER},
+	  #{ img,jdbcType=VARCHAR}
+	)
+  </sql>
+  <insert id="save" keyProperty="imgId" parameterType="com.hassdata.hserp.po.AdministrativeMeetingimg" useGeneratedKeys="true">
+    <include refid="save_administrative_meetingImg_columns" /><include refid="save_administrative_meetingImg_values" />
+  </insert>
+  <insert id="batchSave" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="save_administrative_meetingImg_columns" /><include refid="save_administrative_meetingImg_values" />
+	</foreach>
+  </insert>
+  <sql id="administrative_meetingImgUpdate">
+    update administrative_meetingImg 
+	<set> 
+      <if test="null != id">id = #{ id,jdbcType=INTEGER},</if>
+      <if test="null != img">img = #{ img,jdbcType=VARCHAR}</if>
+	</set>
+	where img_id = #{imgId}
+  </sql>
+  <update id="update" parameterType="com.hassdata.hserp.po.AdministrativeMeetingimg">
+    <include refid="administrative_meetingImgUpdate" />
+  </update>
+  <update id="batchUpdate" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="administrative_meetingImgUpdate" />
+	</foreach>
+  </update>
+  <delete id="delById">
+    <![CDATA[ delete from administrative_meetingImg where img_id = #{img_id} ]]>
+  </delete>
+  <delete id="delArray">
+    delete from administrative_meetingImg where img_id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="delList">
+    delete from administrative_meetingImg where img_id in
+	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+</mapper>

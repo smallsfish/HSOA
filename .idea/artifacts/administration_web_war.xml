@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="administration-web:war">
+    <output-path>$PROJECT_DIR$/hserp/administration-web/target</output-path>
+    <root id="archive" name="administration-web.war">
+      <element id="artifact" artifact-name="administration-web:war exploded" />
+    </root>
+  </artifact>
+</component>

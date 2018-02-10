@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hassdata.hserp.dao.ProjectOutDataMapper">
+  <resultMap id="BaseResultMap" type="com.hassdata.hserp.po.ProjectOutData">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="project_out_data_way" jdbcType="VARCHAR" property="projectOutDataWay" />
+    <result column="project_out_data_type" jdbcType="TINYINT" property="projectOutDataType" />
+    <result column="project_out_data_name" jdbcType="VARCHAR" property="projectOutDataName" />
+    <result column="project_out_data_info" jdbcType="LONGVARCHAR" property="projectOutDataInfo" />
+  </resultMap>
+  <sql id="project_out_dataColumns">
+    <![CDATA[ id,pid,project_out_data_way,project_out_data_type,project_out_data_name,project_out_data_info ]]>
+  </sql>
+  <sql id="project_out_dataDynamicWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id = #{ id}</if>
+      <if test="null != pid and '' !=  pid">and pid = #{ pid}</if>
+      <if test="null != projectOutDataWay and '' !=  projectOutDataWay">and project_out_data_way = #{ projectOutDataWay}</if>
+      <if test="null != projectOutDataType and '' !=  projectOutDataType">and project_out_data_type = #{ projectOutDataType}</if>
+      <if test="null != projectOutDataName and '' !=  projectOutDataName">and project_out_data_name = #{ projectOutDataName}</if>
+      <if test="null != projectOutDataInfo and '' !=  projectOutDataInfo">and project_out_data_info = #{ projectOutDataInfo}</if>
+	</where>
+  </sql>
+  <sql id="project_out_dataDynamicLikeWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id LIKE #{ id}</if>
+      <if test="null != pid and '' !=  pid">and pid LIKE #{ pid}</if>
+      <if test="null != projectOutDataWay and '' !=  projectOutDataWay">and project_out_data_way LIKE #{ projectOutDataWay}</if>
+      <if test="null != projectOutDataType and '' !=  projectOutDataType">and project_out_data_type LIKE #{ projectOutDataType}</if>
+      <if test="null != projectOutDataName and '' !=  projectOutDataName">and project_out_data_name LIKE #{ projectOutDataName}</if>
+      <if test="null != projectOutDataInfo and '' !=  projectOutDataInfo">and project_out_data_info LIKE #{ projectOutDataInfo}</if>
+	</where>
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="project_out_dataColumns" /> from  project_out_data where id = #{id}
+  </select>
+  <select id="getOne" parameterType="com.hassdata.hserp.po.ProjectOutData" resultMap="BaseResultMap">
+    select <include refid="project_out_dataColumns" /> from  project_out_data <include refid="project_out_dataDynamicWhere" /> limit 0 , 1
+  </select>
+  <select id="list" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="project_out_dataColumns" /> from  project_out_data <include refid="project_out_dataDynamicWhere" />
+	<if test="orderBy != null and orderBy != ''">
+          order by ${orderBy}
+      </if>
+  </select>
+  <select id="listPage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="project_out_dataColumns" /> from  project_out_data <include refid="project_out_dataDynamicWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="listLikePage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="project_out_dataColumns" /> from  project_out_data <include refid="project_out_dataDynamicLikeWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="countLike" parameterType="com.hassdata.hserp.po.ProjectOutData" resultType="java.lang.Long">
+    select count(1) from project_out_data <include refid="project_out_dataDynamicLikeWhere" />
+  </select>
+  <select id="count" parameterType="com.hassdata.hserp.po.ProjectOutData" resultType="java.lang.Long">
+    select count(1) from project_out_data <include refid="project_out_dataDynamicWhere" />
+  </select>
+  <sql id="save_project_out_data_columns">
+    insert into project_out_data(
+		pid ,project_out_data_way ,project_out_data_type ,project_out_data_name ,project_out_data_info
+	) values
+  </sql>
+  <sql id="save_project_out_data_values">
+    (
+	  #{ pid,jdbcType=INTEGER},
+	  #{ projectOutDataWay,jdbcType=VARCHAR},
+	  #{ projectOutDataType,jdbcType=TINYINT},
+	  #{ projectOutDataName,jdbcType=VARCHAR},
+	  #{ projectOutDataInfo,jdbcType=LONGVARCHAR}
+	)
+  </sql>
+  <insert id="save" keyProperty="id" parameterType="com.hassdata.hserp.po.ProjectOutData" useGeneratedKeys="true">
+    <include refid="save_project_out_data_columns" /><include refid="save_project_out_data_values" />
+  </insert>
+  <insert id="batchSave" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="save_project_out_data_columns" /><include refid="save_project_out_data_values" />
+	</foreach>
+  </insert>
+  <sql id="project_out_dataUpdate">
+    update project_out_data 
+	<set> 
+      <if test="null != pid">pid = #{ pid,jdbcType=INTEGER},</if>
+      <if test="null != projectOutDataWay">project_out_data_way = #{ projectOutDataWay,jdbcType=VARCHAR},</if>
+      <if test="null != projectOutDataType">project_out_data_type = #{ projectOutDataType,jdbcType=TINYINT},</if>
+      <if test="null != projectOutDataName">project_out_data_name = #{ projectOutDataName,jdbcType=VARCHAR},</if>
+      <if test="null != projectOutDataInfo">project_out_data_info = #{ projectOutDataInfo,jdbcType=LONGVARCHAR}</if>
+	</set>
+	where id = #{id}
+  </sql>
+  <update id="update" parameterType="com.hassdata.hserp.po.ProjectOutData">
+    <include refid="project_out_dataUpdate" />
+  </update>
+  <update id="batchUpdate" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="project_out_dataUpdate" />
+	</foreach>
+  </update>
+  <delete id="delById">
+    <![CDATA[ delete from project_out_data where id = #{id} ]]>
+  </delete>
+  <delete id="delArray">
+    delete from project_out_data where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="delList">
+    delete from project_out_data where id in
+	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+</mapper>

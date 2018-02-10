@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hassdata.hserp.dao.ProjectDataMapper">
+  <resultMap id="BaseResultMap" type="com.hassdata.hserp.po.ProjectData">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="project_data_way" jdbcType="VARCHAR" property="projectDataWay" />
+    <result column="project_data_type" jdbcType="TINYINT" property="projectDataType" />
+    <result column="project_data_name" jdbcType="VARCHAR" property="projectDataName" />
+    <result column="project_data_info" jdbcType="LONGVARCHAR" property="projectDataInfo" />
+  </resultMap>
+  <sql id="project_dataColumns">
+    <![CDATA[ id,pid,project_data_way,project_data_type,project_data_name,project_data_info ]]>
+  </sql>
+  <sql id="project_dataDynamicWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id = #{ id}</if>
+      <if test="null != pid and '' !=  pid">and pid = #{ pid}</if>
+      <if test="null != projectDataWay and '' !=  projectDataWay">and project_data_way = #{ projectDataWay}</if>
+      <if test="null != projectDataType and '' !=  projectDataType">and project_data_type = #{ projectDataType}</if>
+      <if test="null != projectDataName and '' !=  projectDataName">and project_data_name = #{ projectDataName}</if>
+      <if test="null != projectDataInfo and '' !=  projectDataInfo">and project_data_info = #{ projectDataInfo}</if>
+	</where>
+  </sql>
+  <sql id="project_dataDynamicLikeWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id LIKE #{ id}</if>
+      <if test="null != pid and '' !=  pid">and pid LIKE #{ pid}</if>
+      <if test="null != projectDataWay and '' !=  projectDataWay">and project_data_way LIKE #{ projectDataWay}</if>
+      <if test="null != projectDataType and '' !=  projectDataType">and project_data_type LIKE #{ projectDataType}</if>
+      <if test="null != projectDataName and '' !=  projectDataName">and project_data_name LIKE #{ projectDataName}</if>
+      <if test="null != projectDataInfo and '' !=  projectDataInfo">and project_data_info LIKE #{ projectDataInfo}</if>
+	</where>
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="project_dataColumns" /> from  project_data where id = #{id}
+  </select>
+  <select id="getOne" parameterType="com.hassdata.hserp.po.ProjectData" resultMap="BaseResultMap">
+    select <include refid="project_dataColumns" /> from  project_data <include refid="project_dataDynamicWhere" /> limit 0 , 1
+  </select>
+  <select id="list" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="project_dataColumns" /> from  project_data <include refid="project_dataDynamicWhere" />
+	<if test="orderBy != null and orderBy != ''">
+          order by ${orderBy}
+      </if>
+  </select>
+  <select id="listPage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="project_dataColumns" /> from  project_data <include refid="project_dataDynamicWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="listLikePage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="project_dataColumns" /> from  project_data <include refid="project_dataDynamicLikeWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="countLike" parameterType="com.hassdata.hserp.po.ProjectData" resultType="java.lang.Long">
+    select count(1) from project_data <include refid="project_dataDynamicLikeWhere" />
+  </select>
+  <select id="count" parameterType="com.hassdata.hserp.po.ProjectData" resultType="java.lang.Long">
+    select count(1) from project_data <include refid="project_dataDynamicWhere" />
+  </select>
+  <sql id="save_project_data_columns">
+    insert into project_data(
+		pid ,project_data_way ,project_data_type ,project_data_name ,project_data_info
+	) values
+  </sql>
+  <sql id="save_project_data_values">
+    (
+	  #{ pid,jdbcType=INTEGER},
+	  #{ projectDataWay,jdbcType=VARCHAR},
+	  #{ projectDataType,jdbcType=TINYINT},
+	  #{ projectDataName,jdbcType=VARCHAR},
+	  #{ projectDataInfo,jdbcType=LONGVARCHAR}
+	)
+  </sql>
+  <insert id="save" keyProperty="id" parameterType="com.hassdata.hserp.po.ProjectData" useGeneratedKeys="true">
+    <include refid="save_project_data_columns" /><include refid="save_project_data_values" />
+  </insert>
+  <insert id="batchSave" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="save_project_data_columns" /><include refid="save_project_data_values" />
+	</foreach>
+  </insert>
+  <sql id="project_dataUpdate">
+    update project_data 
+	<set> 
+      <if test="null != pid">pid = #{ pid,jdbcType=INTEGER},</if>
+      <if test="null != projectDataWay">project_data_way = #{ projectDataWay,jdbcType=VARCHAR},</if>
+      <if test="null != projectDataType">project_data_type = #{ projectDataType,jdbcType=TINYINT},</if>
+      <if test="null != projectDataName">project_data_name = #{ projectDataName,jdbcType=VARCHAR},</if>
+      <if test="null != projectDataInfo">project_data_info = #{ projectDataInfo,jdbcType=LONGVARCHAR}</if>
+	</set>
+	where id = #{id}
+  </sql>
+  <update id="update" parameterType="com.hassdata.hserp.po.ProjectData">
+    <include refid="project_dataUpdate" />
+  </update>
+  <update id="batchUpdate" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="project_dataUpdate" />
+	</foreach>
+  </update>
+  <delete id="delById">
+    <![CDATA[ delete from project_data where id = #{id} ]]>
+  </delete>
+  <delete id="delArray">
+    delete from project_data where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="delList">
+    delete from project_data where id in
+	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+</mapper>

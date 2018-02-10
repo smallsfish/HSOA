@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hassdata.hserp.dao.AdministrativeChapterMapper">
+  <resultMap id="BaseResultMap" type="com.hassdata.hserp.po.AdministrativeChapter">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user" jdbcType="VARCHAR" property="user" />
+    <result column="usedetails" jdbcType="VARCHAR" property="usedetails" />
+    <result column="usetime" jdbcType="VARCHAR" property="usetime" />
+  </resultMap>
+  <sql id="administrative_chapterColumns">
+    <![CDATA[ id,user,usedetails,usetime ]]>
+  </sql>
+  <sql id="administrative_chapterDynamicWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id = #{ id}</if>
+      <if test="null != user and '' !=  user">and user = #{ user}</if>
+      <if test="null != usedetails and '' !=  usedetails">and usedetails = #{ usedetails}</if>
+      <if test="null != usetime and '' !=  usetime">and usetime = #{ usetime}</if>
+	</where>
+  </sql>
+  <sql id="administrative_chapterDynamicLikeWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id LIKE #{ id}</if>
+      <if test="null != user and '' !=  user">and user LIKE #{ user}</if>
+      <if test="null != usedetails and '' !=  usedetails">and usedetails LIKE #{ usedetails}</if>
+      <if test="null != usetime and '' !=  usetime">and usetime LIKE #{ usetime}</if>
+	</where>
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="administrative_chapterColumns" /> from  administrative_chapter where id = #{id}
+  </select>
+  <select id="getOne" parameterType="com.hassdata.hserp.po.AdministrativeChapter" resultMap="BaseResultMap">
+    select <include refid="administrative_chapterColumns" /> from  administrative_chapter <include refid="administrative_chapterDynamicWhere" /> limit 0 , 1
+  </select>
+  <select id="list" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="administrative_chapterColumns" /> from  administrative_chapter <include refid="administrative_chapterDynamicWhere" />
+	<if test="orderBy != null and orderBy != ''">
+          order by ${orderBy}
+      </if>
+  </select>
+  <select id="listPage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="administrative_chapterColumns" /> from  administrative_chapter <include refid="administrative_chapterDynamicWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="listLikePage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="administrative_chapterColumns" /> from  administrative_chapter <include refid="administrative_chapterDynamicLikeWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="countLike" parameterType="com.hassdata.hserp.po.AdministrativeChapter" resultType="java.lang.Long">
+    select count(1) from administrative_chapter <include refid="administrative_chapterDynamicLikeWhere" />
+  </select>
+  <select id="count" parameterType="com.hassdata.hserp.po.AdministrativeChapter" resultType="java.lang.Long">
+    select count(1) from administrative_chapter <include refid="administrative_chapterDynamicWhere" />
+  </select>
+  <sql id="save_administrative_chapter_columns">
+    insert into administrative_chapter(
+		user ,usedetails ,usetime
+	) values
+  </sql>
+  <sql id="save_administrative_chapter_values">
+    (
+	  #{ user,jdbcType=VARCHAR},
+	  #{ usedetails,jdbcType=VARCHAR},
+	  #{ usetime,jdbcType=VARCHAR}
+	)
+  </sql>
+  <insert id="save" keyProperty="id" parameterType="com.hassdata.hserp.po.AdministrativeChapter" useGeneratedKeys="true">
+    <include refid="save_administrative_chapter_columns" /><include refid="save_administrative_chapter_values" />
+  </insert>
+  <insert id="batchSave" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="save_administrative_chapter_columns" /><include refid="save_administrative_chapter_values" />
+	</foreach>
+  </insert>
+  <sql id="administrative_chapterUpdate">
+    update administrative_chapter 
+	<set> 
+      <if test="null != user">user = #{ user,jdbcType=VARCHAR},</if>
+      <if test="null != usedetails">usedetails = #{ usedetails,jdbcType=VARCHAR},</if>
+      <if test="null != usetime">usetime = #{ usetime,jdbcType=VARCHAR}</if>
+	</set>
+	where id = #{id}
+  </sql>
+  <update id="update" parameterType="com.hassdata.hserp.po.AdministrativeChapter">
+    <include refid="administrative_chapterUpdate" />
+  </update>
+  <update id="batchUpdate" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="administrative_chapterUpdate" />
+	</foreach>
+  </update>
+  <delete id="delById">
+    <![CDATA[ delete from administrative_chapter where id = #{id} ]]>
+  </delete>
+  <delete id="delArray">
+    delete from administrative_chapter where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="delList">
+    delete from administrative_chapter where id in
+	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+</mapper>

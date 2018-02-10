@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/administration-management/administration-management.iml" filepath="$PROJECT_DIR$/administration-management/administration-management.iml" />
+      <module fileurl="file://$PROJECT_DIR$/administration-web/administration-web.iml" filepath="$PROJECT_DIR$/administration-web/administration-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hserp.iml" filepath="$PROJECT_DIR$/hserp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/human-resources-management/human-resources-management.iml" filepath="$PROJECT_DIR$/human-resources-management/human-resources-management.iml" />
+      <module fileurl="file://$PROJECT_DIR$/human-resources-web/human-resources-web.iml" filepath="$PROJECT_DIR$/human-resources-web/human-resources-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oaweb/osweb.iml" filepath="$PROJECT_DIR$/oaweb/osweb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/performance-management/performance-management.iml" filepath="$PROJECT_DIR$/performance-management/performance-management.iml" />
+      <module fileurl="file://$PROJECT_DIR$/performance-web/performance-web.iml" filepath="$PROJECT_DIR$/performance-web/performance-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/project-management/project-management.iml" filepath="$PROJECT_DIR$/project-management/project-management.iml" />
+      <module fileurl="file://$PROJECT_DIR$/project-web/project-web.iml" filepath="$PROJECT_DIR$/project-web/project-web.iml" />
+    </modules>
+  </component>
+</project>

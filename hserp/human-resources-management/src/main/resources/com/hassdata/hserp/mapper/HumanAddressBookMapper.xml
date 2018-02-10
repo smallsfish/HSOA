@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hassdata.hserp.dao.HumanAddressBookMapper">
+  <resultMap id="BaseResultMap" type="com.hassdata.hserp.po.HumanAddressBook">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="eid" jdbcType="INTEGER" property="eid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="BIT" property="sex" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="dept_id" jdbcType="INTEGER" property="deptId" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+  </resultMap>
+  <sql id="human_address_bookColumns">
+    <![CDATA[ id,eid,name,sex,tel,dept_id,email,address ]]>
+  </sql>
+  <sql id="human_address_bookDynamicWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id = #{ id}</if>
+      <if test="null != eid and '' !=  eid">and eid = #{ eid}</if>
+      <if test="null != name and '' !=  name">and name = #{ name}</if>
+      <if test="null != sex and '' !=  sex">and sex = #{ sex}</if>
+      <if test="null != tel and '' !=  tel">and tel = #{ tel}</if>
+      <if test="null != deptId and '' !=  deptId">and dept_id = #{ deptId}</if>
+      <if test="null != email and '' !=  email">and email = #{ email}</if>
+      <if test="null != address and '' !=  address">and address = #{ address}</if>
+	</where>
+  </sql>
+  <sql id="human_address_bookDynamicLikeWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id LIKE #{ id}</if>
+      <if test="null != eid and '' !=  eid">and eid LIKE #{ eid}</if>
+      <if test="null != name and '' !=  name">and name LIKE #{ name}</if>
+      <if test="null != sex and '' !=  sex">and sex LIKE #{ sex}</if>
+      <if test="null != tel and '' !=  tel">and tel LIKE #{ tel}</if>
+      <if test="null != deptId and '' !=  deptId">and dept_id LIKE #{ deptId}</if>
+      <if test="null != email and '' !=  email">and email LIKE #{ email}</if>
+      <if test="null != address and '' !=  address">and address LIKE #{ address}</if>
+	</where>
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="human_address_bookColumns" /> from  human_address_book where id = #{id}
+  </select>
+  <select id="getOne" parameterType="com.hassdata.hserp.po.HumanAddressBook" resultMap="BaseResultMap">
+    select <include refid="human_address_bookColumns" /> from  human_address_book <include refid="human_address_bookDynamicWhere" /> limit 0 , 1
+  </select>
+  <select id="list" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="human_address_bookColumns" /> from  human_address_book <include refid="human_address_bookDynamicWhere" />
+	<if test="orderBy != null and orderBy != ''">
+          order by ${orderBy}
+      </if>
+  </select>
+  <select id="listPage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="human_address_bookColumns" /> from  human_address_book <include refid="human_address_bookDynamicWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="listLikePage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="human_address_bookColumns" /> from  human_address_book <include refid="human_address_bookDynamicLikeWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="countLike" parameterType="com.hassdata.hserp.po.HumanAddressBook" resultType="java.lang.Long">
+    select count(1) from human_address_book <include refid="human_address_bookDynamicLikeWhere" />
+  </select>
+  <select id="count" parameterType="com.hassdata.hserp.po.HumanAddressBook" resultType="java.lang.Long">
+    select count(1) from human_address_book <include refid="human_address_bookDynamicWhere" />
+  </select>
+  <sql id="save_human_address_book_columns">
+    insert into human_address_book(
+		eid ,name ,sex ,tel ,dept_id ,email ,address
+	) values
+  </sql>
+  <sql id="save_human_address_book_values">
+    (
+	  #{ eid,jdbcType=INTEGER},
+	  #{ name,jdbcType=VARCHAR},
+	  #{ sex,jdbcType=BIT},
+	  #{ tel,jdbcType=VARCHAR},
+	  #{ deptId,jdbcType=INTEGER},
+	  #{ email,jdbcType=VARCHAR},
+	  #{ address,jdbcType=VARCHAR}
+	)
+  </sql>
+  <insert id="save" keyProperty="id" parameterType="com.hassdata.hserp.po.HumanAddressBook" useGeneratedKeys="true">
+    <include refid="save_human_address_book_columns" /><include refid="save_human_address_book_values" />
+  </insert>
+  <insert id="batchSave" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="save_human_address_book_columns" /><include refid="save_human_address_book_values" />
+	</foreach>
+  </insert>
+  <sql id="human_address_bookUpdate">
+    update human_address_book 
+	<set> 
+      <if test="null != eid">eid = #{ eid,jdbcType=INTEGER},</if>
+      <if test="null != name">name = #{ name,jdbcType=VARCHAR},</if>
+      <if test="null != sex">sex = #{ sex,jdbcType=BIT},</if>
+      <if test="null != tel">tel = #{ tel,jdbcType=VARCHAR},</if>
+      <if test="null != deptId">dept_id = #{ deptId,jdbcType=INTEGER},</if>
+      <if test="null != email">email = #{ email,jdbcType=VARCHAR},</if>
+      <if test="null != address">address = #{ address,jdbcType=VARCHAR}</if>
+	</set>
+	where id = #{id}
+  </sql>
+  <update id="update" parameterType="com.hassdata.hserp.po.HumanAddressBook">
+    <include refid="human_address_bookUpdate" />
+  </update>
+  <update id="batchUpdate" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="human_address_bookUpdate" />
+	</foreach>
+  </update>
+  <delete id="delById">
+    <![CDATA[ delete from human_address_book where id = #{id} ]]>
+  </delete>
+  <delete id="delArray">
+    delete from human_address_book where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="delList">
+    delete from human_address_book where id in
+	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+</mapper>

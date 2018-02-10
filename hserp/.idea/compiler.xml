@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="administration-management" />
+        <module name="administration-web" />
+        <module name="common" />
+        <module name="human-resources-management" />
+        <module name="human-resources-web" />
+        <module name="osweb" />
+        <module name="performance-management" />
+        <module name="performance-web" />
+        <module name="project-management" />
+        <module name="project-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="administration-management" target="1.8" />
+      <module name="administration-web" target="1.8" />
+      <module name="common" target="1.8" />
+      <module name="hserp" target="1.8" />
+      <module name="human-resources-management" target="1.8" />
+      <module name="human-resources-web" target="1.8" />
+      <module name="osweb" target="1.8" />
+      <module name="performance-management" target="1.8" />
+      <module name="performance-web" target="1.8" />
+      <module name="project-management" target="1.8" />
+      <module name="project-web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

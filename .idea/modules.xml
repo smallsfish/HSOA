@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/hserp/administration-management/administration-management.iml" filepath="$PROJECT_DIR$/hserp/administration-management/administration-management.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hserp/administration-web/administration-web.iml" filepath="$PROJECT_DIR$/hserp/administration-web/administration-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hserp/common/common.iml" filepath="$PROJECT_DIR$/hserp/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hserp/hserp.iml" filepath="$PROJECT_DIR$/hserp/hserp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hserp/human-resources-management/human-resources-management.iml" filepath="$PROJECT_DIR$/hserp/human-resources-management/human-resources-management.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hserp/human-resources-web/human-resources-web.iml" filepath="$PROJECT_DIR$/hserp/human-resources-web/human-resources-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hserp/oaweb/osweb.iml" filepath="$PROJECT_DIR$/hserp/oaweb/osweb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hserp/performance-management/performance-management.iml" filepath="$PROJECT_DIR$/hserp/performance-management/performance-management.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hserp/performance-web/performance-web.iml" filepath="$PROJECT_DIR$/hserp/performance-web/performance-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hserp/project-management/project-management.iml" filepath="$PROJECT_DIR$/hserp/project-management/project-management.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hserp/project-web/project-web.iml" filepath="$PROJECT_DIR$/hserp/project-web/project-web.iml" />
+    </modules>
+  </component>
+</project>

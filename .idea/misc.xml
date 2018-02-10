@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file url="file://$PROJECT_DIR$/hserp/oaweb/overlays" />
+    <file type="web" url="file://$PROJECT_DIR$/hserp/administration-web" />
+    <file type="web" url="file://$PROJECT_DIR$/hserp/human-resources-web" />
+    <file type="web" url="file://$PROJECT_DIR$/hserp/oaweb" />
+    <file type="web" url="file://$PROJECT_DIR$/hserp/performance-web" />
+    <file type="web" url="file://$PROJECT_DIR$/hserp/project-web" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/hsoa/pom.xml" />
+        <option value="$PROJECT_DIR$/hserp/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$/hserp">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="trunkUrl" value="svn://192.168.1.125/hserp" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="mySupportsUserInfoFilter" value="true" />
+  </component>
+</project>

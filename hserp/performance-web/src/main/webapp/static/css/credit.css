@@ -1,0 +1,53 @@
+@charset "utf-8";
+
+.search-box{
+	margin-top: 10px;
+}
+.search-box .seaerch-txt {
+	width: 266px;
+	height: 35px;
+	font-size: 14px;
+	padding: 0 5px;
+}
+.search-box .search-add{
+	height: 39px;
+	line-height: 39px;
+	margin-right: 10px;
+}
+.search-box .search-add i{
+	display: inline-block;
+	width: 39px;
+	height: 39px;
+	background: #009688;
+	color: #fff;
+	border-radius: 2px;
+	cursor: pointer;
+	text-align: center;
+}
+.search-box .search-add i:hover{
+	background: #33aba0;
+}
+.search-box .s-btn{
+	margin-left: 10px;
+	height: 39px;
+	width: 75px;
+}
+.evaluationAdd{
+	margin-top:20px;
+}
+.layui-form-label {
+	width: 120px;
+}
+
+.layui-input {
+	width: 500px;
+}
+.layui-input-block {
+	width: 540px;
+}
+.layui-input-block select{
+	color: gray;
+}
+.sub{
+	margin-left: 150px;
+}

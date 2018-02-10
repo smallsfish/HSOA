@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="human-resources-web:war">
+    <output-path>$PROJECT_DIR$/human-resources-web/target</output-path>
+    <root id="archive" name="human-resources-web.war">
+      <element id="artifact" artifact-name="human-resources-web:war exploded" />
+    </root>
+  </artifact>
+</component>

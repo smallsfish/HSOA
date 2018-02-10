@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hassdata.hserp.dao.AdministrativeDataMapper">
+  <resultMap id="BaseResultMap" type="com.hassdata.hserp.po.AdministrativeData">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="annex" jdbcType="VARCHAR" property="annex" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+  </resultMap>
+  <sql id="administrative_dataColumns">
+    <![CDATA[ id,annex,text,time ]]>
+  </sql>
+  <sql id="administrative_dataDynamicWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id = #{ id}</if>
+      <if test="null != annex and '' !=  annex">and annex = #{ annex}</if>
+      <if test="null != text and '' !=  text">and text = #{ text}</if>
+      <if test="null != time and '' !=  time">and time = #{ time}</if>
+	</where>
+  </sql>
+  <sql id="administrative_dataDynamicLikeWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id LIKE #{ id}</if>
+      <if test="null != annex and '' !=  annex">and annex LIKE #{ annex}</if>
+      <if test="null != text and '' !=  text">and text LIKE #{ text}</if>
+      <if test="null != time and '' !=  time">and time LIKE #{ time}</if>
+	</where>
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="administrative_dataColumns" /> from  administrative_data where id = #{id}
+  </select>
+  <select id="getOne" parameterType="com.hassdata.hserp.po.AdministrativeData" resultMap="BaseResultMap">
+    select <include refid="administrative_dataColumns" /> from  administrative_data <include refid="administrative_dataDynamicWhere" /> limit 0 , 1
+  </select>
+  <select id="list" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="administrative_dataColumns" /> from  administrative_data <include refid="administrative_dataDynamicWhere" />
+	<if test="orderBy != null and orderBy != ''">
+          order by ${orderBy}
+      </if>
+  </select>
+  <select id="listPage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="administrative_dataColumns" /> from  administrative_data <include refid="administrative_dataDynamicWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="listLikePage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="administrative_dataColumns" /> from  administrative_data <include refid="administrative_dataDynamicLikeWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="countLike" parameterType="com.hassdata.hserp.po.AdministrativeData" resultType="java.lang.Long">
+    select count(1) from administrative_data <include refid="administrative_dataDynamicLikeWhere" />
+  </select>
+  <select id="count" parameterType="com.hassdata.hserp.po.AdministrativeData" resultType="java.lang.Long">
+    select count(1) from administrative_data <include refid="administrative_dataDynamicWhere" />
+  </select>
+  <sql id="save_administrative_data_columns">
+    insert into administrative_data(
+		annex ,text ,time
+	) values
+  </sql>
+  <sql id="save_administrative_data_values">
+    (
+	  #{ annex,jdbcType=VARCHAR},
+	  #{ text,jdbcType=VARCHAR},
+	  #{ time,jdbcType=VARCHAR}
+	)
+  </sql>
+  <insert id="save" keyProperty="id" parameterType="com.hassdata.hserp.po.AdministrativeData" useGeneratedKeys="true">
+    <include refid="save_administrative_data_columns" /><include refid="save_administrative_data_values" />
+  </insert>
+  <insert id="batchSave" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="save_administrative_data_columns" /><include refid="save_administrative_data_values" />
+	</foreach>
+  </insert>
+  <sql id="administrative_dataUpdate">
+    update administrative_data 
+	<set> 
+      <if test="null != annex">annex = #{ annex,jdbcType=VARCHAR},</if>
+      <if test="null != text">text = #{ text,jdbcType=VARCHAR},</if>
+      <if test="null != time">time = #{ time,jdbcType=VARCHAR}</if>
+	</set>
+	where id = #{id}
+  </sql>
+  <update id="update" parameterType="com.hassdata.hserp.po.AdministrativeData">
+    <include refid="administrative_dataUpdate" />
+  </update>
+  <update id="batchUpdate" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="administrative_dataUpdate" />
+	</foreach>
+  </update>
+  <delete id="delById">
+    <![CDATA[ delete from administrative_data where id = #{id} ]]>
+  </delete>
+  <delete id="delArray">
+    delete from administrative_data where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="delList">
+    delete from administrative_data where id in
+	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+</mapper>

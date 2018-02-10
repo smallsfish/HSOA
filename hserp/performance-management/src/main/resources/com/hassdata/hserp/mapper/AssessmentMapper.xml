@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hassdata.hserp.dao.AssessmentMapper">
+  <resultMap id="BaseResultMap" type="com.hassdata.hserp.po.Assessment">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="assessment_id" jdbcType="INTEGER" property="assessmentId" />
+    <result column="basics" jdbcType="TINYINT" property="basics" />
+    <result column="technology" jdbcType="TINYINT" property="technology" />
+    <result column="nontechnology" jdbcType="TINYINT" property="nontechnology" />
+    <result column="customer" jdbcType="TINYINT" property="customer" />
+    <result column="behaviorquality" jdbcType="TINYINT" property="behaviorquality" />
+    <result column="development" jdbcType="TINYINT" property="development" />
+    <result column="comprehensive" jdbcType="TINYINT" property="comprehensive" />
+  </resultMap>
+  <sql id="assessmentColumns">
+    <![CDATA[ id,user_id,user_name,assessment_id,basics,technology,nontechnology,customer,behaviorquality,development,comprehensive ]]>
+  </sql>
+  <sql id="assessmentDynamicWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id = #{ id}</if>
+      <if test="null != userId and '' !=  userId">and user_id = #{ userId}</if>
+      <if test="null != userName and '' !=  userName">and user_name = #{ userName}</if>
+      <if test="null != assessmentId and '' !=  assessmentId">and assessment_id = #{ assessmentId}</if>
+      <if test="null != basics and '' !=  basics">and basics = #{ basics}</if>
+      <if test="null != technology and '' !=  technology">and technology = #{ technology}</if>
+      <if test="null != nontechnology and '' !=  nontechnology">and nontechnology = #{ nontechnology}</if>
+      <if test="null != customer and '' !=  customer">and customer = #{ customer}</if>
+      <if test="null != behaviorquality and '' !=  behaviorquality">and behaviorquality = #{ behaviorquality}</if>
+      <if test="null != development and '' !=  development">and development = #{ development}</if>
+      <if test="null != comprehensive and '' !=  comprehensive">and comprehensive = #{ comprehensive}</if>
+	</where>
+  </sql>
+  <sql id="assessmentDynamicLikeWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id LIKE #{ id}</if>
+      <if test="null != userId and '' !=  userId">and user_id LIKE #{ userId}</if>
+      <if test="null != userName and '' !=  userName">and user_name LIKE #{ userName}</if>
+      <if test="null != assessmentId and '' !=  assessmentId">and assessment_id LIKE #{ assessmentId}</if>
+      <if test="null != basics and '' !=  basics">and basics LIKE #{ basics}</if>
+      <if test="null != technology and '' !=  technology">and technology LIKE #{ technology}</if>
+      <if test="null != nontechnology and '' !=  nontechnology">and nontechnology LIKE #{ nontechnology}</if>
+      <if test="null != customer and '' !=  customer">and customer LIKE #{ customer}</if>
+      <if test="null != behaviorquality and '' !=  behaviorquality">and behaviorquality LIKE #{ behaviorquality}</if>
+      <if test="null != development and '' !=  development">and development LIKE #{ development}</if>
+      <if test="null != comprehensive and '' !=  comprehensive">and comprehensive LIKE #{ comprehensive}</if>
+	</where>
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="assessmentColumns" /> from  assessment where id = #{id}
+  </select>
+  <select id="getOne" parameterType="com.hassdata.hserp.po.Assessment" resultMap="BaseResultMap">
+    select <include refid="assessmentColumns" /> from  assessment <include refid="assessmentDynamicWhere" /> limit 0 , 1
+  </select>
+  <select id="list" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="assessmentColumns" /> from  assessment <include refid="assessmentDynamicWhere" />
+	<if test="orderBy != null and orderBy != ''">
+          order by ${orderBy}
+      </if>
+  </select>
+  <select id="listPage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="assessmentColumns" /> from  assessment <include refid="assessmentDynamicWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="listLikePage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="assessmentColumns" /> from  assessment <include refid="assessmentDynamicLikeWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="countLike" parameterType="com.hassdata.hserp.po.Assessment" resultType="java.lang.Long">
+    select count(1) from assessment <include refid="assessmentDynamicLikeWhere" />
+  </select>
+  <select id="count" parameterType="com.hassdata.hserp.po.Assessment" resultType="java.lang.Long">
+    select count(1) from assessment <include refid="assessmentDynamicWhere" />
+  </select>
+  <sql id="save_assessment_columns">
+    insert into assessment(
+		user_id ,user_name ,assessment_id ,basics ,technology ,nontechnology ,customer ,behaviorquality ,development ,comprehensive
+	) values
+  </sql>
+  <sql id="save_assessment_values">
+    (
+	  #{ userId,jdbcType=INTEGER},
+	  #{ userName,jdbcType=VARCHAR},
+	  #{ assessmentId,jdbcType=INTEGER},
+	  #{ basics,jdbcType=TINYINT},
+	  #{ technology,jdbcType=TINYINT},
+	  #{ nontechnology,jdbcType=TINYINT},
+	  #{ customer,jdbcType=TINYINT},
+	  #{ behaviorquality,jdbcType=TINYINT},
+	  #{ development,jdbcType=TINYINT},
+	  #{ comprehensive,jdbcType=TINYINT}
+	)
+  </sql>
+  <insert id="save" keyProperty="id" parameterType="com.hassdata.hserp.po.Assessment" useGeneratedKeys="true">
+    <include refid="save_assessment_columns" /><include refid="save_assessment_values" />
+  </insert>
+  <insert id="batchSave" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="save_assessment_columns" /><include refid="save_assessment_values" />
+	</foreach>
+  </insert>
+  <sql id="assessmentUpdate">
+    update assessment 
+	<set> 
+      <if test="null != userId">user_id = #{ userId,jdbcType=INTEGER},</if>
+      <if test="null != userName">user_name = #{ userName,jdbcType=VARCHAR},</if>
+      <if test="null != assessmentId">assessment_id = #{ assessmentId,jdbcType=INTEGER},</if>
+      <if test="null != basics">basics = #{ basics,jdbcType=TINYINT},</if>
+      <if test="null != technology">technology = #{ technology,jdbcType=TINYINT},</if>
+      <if test="null != nontechnology">nontechnology = #{ nontechnology,jdbcType=TINYINT},</if>
+      <if test="null != customer">customer = #{ customer,jdbcType=TINYINT},</if>
+      <if test="null != behaviorquality">behaviorquality = #{ behaviorquality,jdbcType=TINYINT},</if>
+      <if test="null != development">development = #{ development,jdbcType=TINYINT},</if>
+      <if test="null != comprehensive">comprehensive = #{ comprehensive,jdbcType=TINYINT}</if>
+	</set>
+	where id = #{id}
+  </sql>
+  <update id="update" parameterType="com.hassdata.hserp.po.Assessment">
+    <include refid="assessmentUpdate" />
+  </update>
+  <update id="batchUpdate" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="assessmentUpdate" />
+	</foreach>
+  </update>
+  <delete id="delById">
+    <![CDATA[ delete from assessment where id = #{id} ]]>
+  </delete>
+  <delete id="delArray">
+    delete from assessment where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="delList">
+    delete from assessment where id in
+	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+</mapper>

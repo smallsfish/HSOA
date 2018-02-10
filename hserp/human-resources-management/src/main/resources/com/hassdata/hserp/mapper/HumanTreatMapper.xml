@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hassdata.hserp.dao.HumanTreatMapper">
+  <resultMap id="BaseResultMap" type="com.hassdata.hserp.po.HumanTreat">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="eid" jdbcType="INTEGER" property="eid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="dept_id" jdbcType="INTEGER" property="deptId" />
+    <result column="salary" jdbcType="DECIMAL" property="salary" />
+  </resultMap>
+  <sql id="human_treatColumns">
+    <![CDATA[ id,eid,name,dept_id,salary ]]>
+  </sql>
+  <sql id="human_treatDynamicWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id = #{ id}</if>
+      <if test="null != eid and '' !=  eid">and eid = #{ eid}</if>
+      <if test="null != name and '' !=  name">and name = #{ name}</if>
+      <if test="null != deptId and '' !=  deptId">and dept_id = #{ deptId}</if>
+      <if test="null != salary and '' !=  salary">and salary = #{ salary}</if>
+	</where>
+  </sql>
+  <sql id="human_treatDynamicLikeWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id LIKE #{ id}</if>
+      <if test="null != eid and '' !=  eid">and eid LIKE #{ eid}</if>
+      <if test="null != name and '' !=  name">and name LIKE #{ name}</if>
+      <if test="null != deptId and '' !=  deptId">and dept_id LIKE #{ deptId}</if>
+      <if test="null != salary and '' !=  salary">and salary LIKE #{ salary}</if>
+	</where>
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="human_treatColumns" /> from  human_treat where id = #{id}
+  </select>
+  <select id="getOne" parameterType="com.hassdata.hserp.po.HumanTreat" resultMap="BaseResultMap">
+    select <include refid="human_treatColumns" /> from  human_treat <include refid="human_treatDynamicWhere" /> limit 0 , 1
+  </select>
+  <select id="list" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="human_treatColumns" /> from  human_treat <include refid="human_treatDynamicWhere" />
+	<if test="orderBy != null and orderBy != ''">
+          order by ${orderBy}
+      </if>
+  </select>
+  <select id="listPage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="human_treatColumns" /> from  human_treat <include refid="human_treatDynamicWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="listLikePage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="human_treatColumns" /> from  human_treat <include refid="human_treatDynamicLikeWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="countLike" parameterType="com.hassdata.hserp.po.HumanTreat" resultType="java.lang.Long">
+    select count(1) from human_treat <include refid="human_treatDynamicLikeWhere" />
+  </select>
+  <select id="count" parameterType="com.hassdata.hserp.po.HumanTreat" resultType="java.lang.Long">
+    select count(1) from human_treat <include refid="human_treatDynamicWhere" />
+  </select>
+  <sql id="save_human_treat_columns">
+    insert into human_treat(
+		eid ,name ,dept_id ,salary
+	) values
+  </sql>
+  <sql id="save_human_treat_values">
+    (
+	  #{ eid,jdbcType=INTEGER},
+	  #{ name,jdbcType=VARCHAR},
+	  #{ deptId,jdbcType=INTEGER},
+	  #{ salary,jdbcType=DECIMAL}
+	)
+  </sql>
+  <insert id="save" keyProperty="id" parameterType="com.hassdata.hserp.po.HumanTreat" useGeneratedKeys="true">
+    <include refid="save_human_treat_columns" /><include refid="save_human_treat_values" />
+  </insert>
+  <insert id="batchSave" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="save_human_treat_columns" /><include refid="save_human_treat_values" />
+	</foreach>
+  </insert>
+  <sql id="human_treatUpdate">
+    update human_treat 
+	<set> 
+      <if test="null != eid">eid = #{ eid,jdbcType=INTEGER},</if>
+      <if test="null != name">name = #{ name,jdbcType=VARCHAR},</if>
+      <if test="null != deptId">dept_id = #{ deptId,jdbcType=INTEGER},</if>
+      <if test="null != salary">salary = #{ salary,jdbcType=DECIMAL}</if>
+	</set>
+	where id = #{id}
+  </sql>
+  <update id="update" parameterType="com.hassdata.hserp.po.HumanTreat">
+    <include refid="human_treatUpdate" />
+  </update>
+  <update id="batchUpdate" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="human_treatUpdate" />
+	</foreach>
+  </update>
+  <delete id="delById">
+    <![CDATA[ delete from human_treat where id = #{id} ]]>
+  </delete>
+  <delete id="delArray">
+    delete from human_treat where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="delList">
+    delete from human_treat where id in
+	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+</mapper>

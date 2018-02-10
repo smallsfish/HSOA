@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+html{
+    height:100%;
+}
+body{
+    height: 100%
+    
+}
+.classes{
+    width: 100%;
+    height: 100%;   
+    /*background: url("../images/index/bg.jpg") no-repeat center/cover;*/
+}
+
+.c-login-box .login-box{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 19970113;
+    margin: auto;
+    width: 450px;
+    height: 385px;
+    padding:15px 25px;
+    background: rgba(255,255,255,.9);
+    box-shadow: 1px 1px 50px rgba(0,0,0,.3);
+    border-radius: 10px;
+}
+.c-login-box .login-box .login-logo{
+    margin: 15px auto;
+    width: 90%;
+    height: 63px;
+
+    /*background: url("../images/index/school.png") no-repeat center/cover;*/
+}
+.c-login-box .login-box h3{
+    line-height: 48px;
+    text-align: center;
+    font-size: 32px;
+    letter-spacing: 5px;
+}
+.login-input{
+    padding:30px 25px;
+}
+
+.login-input .input-user .input-text{
+    width: 270px;
+    padding: 10px;
+    border: 1px solid #bbb;
+    box-shadow: 1px 1px rgba(204, 204, 204, 0.52);
+    outline: none;
+}
+.login-input .input-user .input-text:hover{
+    outline: 1px solid rgba(4,110,70,.5);
+    box-shadow: 0 0 2px #046e46;
+}
+.login-input .input-user .input-text:focus{
+    outline: 1px solid rgba(4,110,70,.5);
+    box-shadow: 0 0 2px #046e46;
+}
+.login-input .input-user .label-input{
+    display: inline-block;
+    width:70px;
+    font-size: 15px;
+    color: #000;
+    text-align: right;
+    letter-spacing: 1px;
+    font-weight: 700;
+    font-family: "Open Sans",Arial,"Hiragino Sans GB","Microsoft YaHei",STHeiti,"WenQuanYi Micro Hei",SimSun,sans-serif;
+    margin-right: 10px;
+}
+.login-input:nth-of-type(1) .input-user{
+    margin-bottom: 24px;
+}
+.login-input .input-check{
+    color: #787d82;
+    margin-left: 80px;
+    height: 60px;
+    line-height:60px;
+    margin-top: -20px;
+}
+.login-input .input-check a{
+    color: #046e46;
+}
+.login-input .input-user .btn-login{
+    display: block;
+    width: 95%;
+    padding:10px 0;
+    margin: 40px auto;
+    text-align: center;
+    color: #fff;
+    background: #046e46;
+    border: 0;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+}
+.login-input .input-user .btn-login:hover{
+    background: rgba(4,110,70,.8);
+}
