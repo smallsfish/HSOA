@@ -20,49 +20,49 @@
         <div class="layui-form-item">
             <label class="layui-form-label">基础评分:</label>
             <div class="layui-input-inline">
-                <input type="text" placeholder="请输入基础评分" id="basics" name="basics" class="layui-input" required lay-verify="required" autocomplete="off"   onkeyup="value=test(value)?value:''">
+                <input type="text" placeholder="请输入基础评分" id="basics" name="basics" class="layui-input" required lay-verify="required" autocomplete="off"   onblur="value=test(value)?value:''">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">输出技术类文档:</label>
             <div class="layui-input-inline">
-                <input type="text" placeholder="请输入输出技术类文档评分" name="technology" class="layui-input" required lay-verify="required" autocomplete="off"  onkeyup="value=test(value)?value:''">
+                <input type="text" placeholder="请输入输出技术类文档评分" name="technology" class="layui-input" required lay-verify="required" autocomplete="off"  onblur="value=test(value)?value:''">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">输出非技术文档:</label>
             <div class="layui-input-inline">
-                <input type="text" placeholder="请输入输出非技术文档评分" name="nontechnology" class="layui-input" required lay-verify="required" autocomplete="off"  onkeyup="value=test(value)?value:''">
+                <input type="text" placeholder="请输入输出非技术文档评分" name="nontechnology" class="layui-input" required lay-verify="required" autocomplete="off"  onblur="value=test(value)?value:''">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">客户满意:</label>
             <div class="layui-input-inline">
-                <input type="text" placeholder="请输入客户满意评分" name="customer" class="layui-input" required lay-verify="required" autocomplete="off"  onkeyup="value=test(value)?value:''">
+                <input type="text" placeholder="请输入客户满意评分" name="customer" class="layui-input" required lay-verify="required" autocomplete="off"  onblur="value=test(value)?value:''">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">行为效率:</label>
             <div class="layui-input-inline">
-                <input type="text" placeholder="请输入行为效率评分" name="behaviorquality" class="layui-input" required lay-verify="required" autocomplete="off"  onkeyup="value=test(value)?value:''">
+                <input type="text" placeholder="请输入行为效率评分" name="behaviorquality" class="layui-input" required lay-verify="required" autocomplete="off"  onblur="value=test(value)?value:''">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">开发效率:</label>
             <div class="layui-input-inline">
-                <input type="text" placeholder="请输入开发效率评分" name="development" class="layui-input" required lay-verify="required" autocomplete="off"  onkeyup="value=test(value)?value:''">
+                <input type="text" placeholder="请输入开发效率评分" name="development" class="layui-input" required lay-verify="required" autocomplete="off"  onblur="value=test(value)?value:''">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">稳定性:</label>
             <div class="layui-input-inline">
-                <input type="text" placeholder="请输入稳定性评分" name="comprehensive" class="layui-input" required lay-verify="required" autocomplete="off"  onkeyup="value=test(value)?value:''">
+                <input type="text" placeholder="请输入稳定性评分" name="comprehensive" class="layui-input" required lay-verify="required" autocomplete="off"  onblur="value=test(value)?value:''">
             </div>
         </div>
 
@@ -87,7 +87,7 @@
 </script>
 <script>
     $.post('system/performance/getAssessment',{ "id" : window.parent.evaluationId },function (result) {
-        console.log(result.data.basics);
+        console.log(window.parent.evaluationId);
         if(result.code == 0){
             $("input[name=basics]").val(result.data.basics);
             $("input[name=technology]").val(result.data.technology);
@@ -108,9 +108,12 @@
         var form = layui.form;
         layer = layui.layer;
         form.on('submit(evaluationAdd)', function (data) {
+
+
             var loadIndex = layer.load();
             var fromData = new FormData($("#evaluationAdd")[0]);
             fromData.append("id",window.parent.evaluationId);
+
             $.ajax({
                 type: "POST",
                 dataType: "json",
@@ -129,7 +132,7 @@
                 },
                 error: function (data) {
                     layer.close(loadIndex);
-                    layer.alert("出现异常！");
+                    layer.msg("出现异常！");
                 }
             });
             return false;

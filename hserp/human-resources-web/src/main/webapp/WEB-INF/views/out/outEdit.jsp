@@ -121,7 +121,7 @@
     form.on('submit(outEdit)', function (data) {
             var loadIndex = layer.load();
             var fromData = new FormData($("#outEdit")[0]);
-            console.log(data)
+
             fromData.append("id",window.parent.outId);
             $.ajax({
                 type: "POST",
@@ -143,7 +143,7 @@
                 },
                 error: function (data) {
                     layer.close(loadIndex);
-                    layer.alert("出现异常！");
+                    layer.msg("出现异常！");
                 }
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。

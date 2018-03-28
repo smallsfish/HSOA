@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.hassdata</groupId>
-    <artifactId>osweb</artifactId>
+    <artifactId>oaweb</artifactId>
     <packaging>war</packaging>
     <name>osweb Maven Webapp</name>
     <url>http://hassdata.com</url>
@@ -38,7 +38,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>osweb</finalName>
+        <finalName>oaweb</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

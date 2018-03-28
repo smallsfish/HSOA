@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hassdata.hserp.dao.ResourceMapper">
+    <resultMap id="BaseResultMap" type="com.hassdata.hserp.po.Resource">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="parentid" jdbcType="INTEGER" property="parentid"/>
+        <result column="permission" jdbcType="VARCHAR" property="permission"/>
+        <result column="iconurl" jdbcType="VARCHAR" property="iconurl"/>
+        <result column="available" jdbcType="BIT" property="available"/>
+    </resultMap>
+    <sql id="resourceColumns">
+    <![CDATA[
+         id,name,type,url,parentid,permission,iconurl,available
+        ]]>
+  </sql>
+    <sql id="resourceDynamicWhere">
+        <where>
+            <if test="null != id and '' !=  id">and id = #{ id}</if>
+            <if test="null != name and '' !=  name">and name = #{ name}</if>
+            <if test="null != type and '' !=  type">and type = #{ type}</if>
+            <if test="null != url and '' !=  url">and url = #{ url}</if>
+            <if test="null != parentid and '' !=  parentid">and parentid = #{ parentid}</if>
+            <if test="null != permission and '' !=  permission">and permission = #{ permission}</if>
+            <if test="null != iconurl and '' !=  iconurl">and iconurl = #{ iconurl}</if>
+            <if test="null != available and '' !=  available">and available = #{ available}</if>
+        </where>
+    </sql>
+    <sql id="resourceDynamicLikeWhere">
+        <where>
+            <if test="null != id and '' !=  id">and id LIKE #{ id}</if>
+            <if test="null != name and '' !=  name">and name LIKE #{ name}</if>
+            <if test="null != type and '' !=  type">and type LIKE #{ type}</if>
+            <if test="null != url and '' !=  url">and url LIKE #{ url}</if>
+            <if test="null != parentid and '' !=  parentid">and parentid LIKE #{ parentid}</if>
+            <if test="null != permission and '' !=  permission">and permission LIKE #{ permission}</if>
+            <if test="null != iconurl and '' !=  iconurl">and iconurl LIKE #{ iconurl}</if>
+            <if test="null != available and '' !=  available">and available LIKE #{ available}</if>
+        </where>
+    </sql>
+    <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="resourceColumns"/>
+        from resource where id = #{id}
+    </select>
+    <select id="getOne" parameterType="com.hassdata.hserp.po.Resource" resultMap="BaseResultMap">
+        select
+        <include refid="resourceColumns"/>
+        from resource
+        <include refid="resourceDynamicWhere"/>
+        limit 0 , 1
+    </select>
+    <select id="list" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="resourceColumns"/>
+        from resource
+        <include refid="resourceDynamicWhere"/>
+        <if test="orderBy != null and orderBy != ''">
+            order by ${orderBy}
+        </if>
+    </select>
+    <select id="listPage" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="resourceColumns"/>
+        from resource
+        <include refid="resourceDynamicWhere"/>
+        <if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+    </select>
+    <select id="listLikePage" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="resourceColumns"/>
+        from resource
+        <include refid="resourceDynamicLikeWhere"/>
+        <if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+    </select>
+    <select id="countLike" parameterType="com.hassdata.hserp.po.Resource" resultType="java.lang.Long">
+        select count(1) from resource
+        <include refid="resourceDynamicLikeWhere"/>
+    </select>
+    <select id="count" parameterType="com.hassdata.hserp.po.Resource" resultType="java.lang.Long">
+        select count(1) from resource
+        <include refid="resourceDynamicWhere"/>
+    </select>
+    <select id="getResourceByAccount" resultType="com.hassdata.hserp.po.Resource">
+        select
+        <include refid="resourceColumns"/>
+        from resource where id in (select reid from role_resource where rid in (select id from role where id in(select
+        rid from admin_role where aid=(select id from admin_user where account=#{account}) and available = 1 )) ) and
+        permission is not null and available = 1 order by id asc
+    </select>
+    <select id="getResourceNameByRoleId" resultType="java.lang.String">
+        select name from resource where id in (select reid from role_resource where rid= #{rid} ) and available=1
+  </select>
+    <sql id="save_resource_columns">
+    insert into resource(
+		name ,type ,url ,parentid ,permission ,iconurl ,available
+	) values
+  </sql>
+    <sql id="save_resource_values">
+    (
+	  #{ name,jdbcType=VARCHAR},
+	  #{ type,jdbcType=VARCHAR},
+	  #{ url,jdbcType=VARCHAR},
+	  #{ parentid,jdbcType=INTEGER},
+	  #{ permission,jdbcType=VARCHAR},
+	  #{ iconurl,jdbcType=VARCHAR},
+	  #{ available,jdbcType=BIT}
+	)
+  </sql>
+    <insert id="save" keyProperty="id" parameterType="com.hassdata.hserp.po.Resource" useGeneratedKeys="true">
+        <include refid="save_resource_columns"/>
+        <include refid="save_resource_values"/>
+    </insert>
+    <insert id="batchSave" parameterType="list">
+        <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+            <include refid="save_resource_columns"/>
+            <include refid="save_resource_values"/>
+        </foreach>
+    </insert>
+    <sql id="resourceUpdate">
+        update resource
+        <set>
+            <if test="null != name">name = #{ name,jdbcType=VARCHAR},</if>
+            <if test="null != type">type = #{ type,jdbcType=VARCHAR},</if>
+            <if test="null != url">url = #{ url,jdbcType=VARCHAR},</if>
+            <if test="null != parentid">parentid = #{ parentid,jdbcType=INTEGER},</if>
+            <if test="null != permission">permission = #{ permission,jdbcType=VARCHAR},</if>
+            <if test="null != iconurl">iconurl = #{ iconurl,jdbcType=VARCHAR},</if>
+            <if test="null != available">available = #{ available,jdbcType=BIT}</if>
+        </set>
+        where id = #{id}
+    </sql>
+    <update id="update" parameterType="com.hassdata.hserp.po.Resource">
+        <include refid="resourceUpdate"/>
+    </update>
+    <update id="batchUpdate" parameterType="list">
+        <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+            <include refid="resourceUpdate"/>
+        </foreach>
+    </update>
+    <delete id="delById">
+    <![CDATA[
+         delete from resource where id = #{id}
+        ]]>
+  </delete>
+    <delete id="delArray">
+        delete from resource where id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+    </delete>
+    <delete id="delList">
+        delete from resource where id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+    </delete>
+</mapper>

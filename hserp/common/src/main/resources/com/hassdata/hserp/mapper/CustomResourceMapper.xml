@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hassdata.hserp.dao.CustomResourceMapper">
+  <resultMap id="BaseResultMap" type="com.hassdata.hserp.po.CustomResource">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="size" jdbcType="TINYINT" property="size" />
+    <result column="responsible_person" jdbcType="VARCHAR" property="responsiblePerson" />
+    <result column="lead" jdbcType="VARCHAR" property="lead" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="company_tel" jdbcType="VARCHAR" property="companyTel" />
+    <result column="company_eamil" jdbcType="VARCHAR" property="companyEamil" />
+    <result column="responsible_tel" jdbcType="VARCHAR" property="responsibleTel" />
+    <result column="responsible_email" jdbcType="VARCHAR" property="responsibleEmail" />
+    <result column="company_time" jdbcType="DATE" property="companyTime" />
+    <result column="responsible_birthday" jdbcType="DATE" property="responsibleBirthday" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="custom_resourceColumns">
+    <![CDATA[ id,company,size,responsible_person,lead,status,company_tel,company_eamil,responsible_tel,responsible_email,company_time,responsible_birthday,create_time ]]>
+  </sql>
+  <sql id="custom_resourceDynamicWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id = #{ id}</if>
+      <if test="null != company and '' !=  company">and company = #{ company}</if>
+      <if test="null != size and '' !=  size">and size = #{ size}</if>
+      <if test="null != responsiblePerson and '' !=  responsiblePerson">and responsible_person = #{ responsiblePerson}</if>
+      <if test="null != lead and '' !=  lead">and lead = #{ lead}</if>
+      <if test="null != status and '' !=  status">and status = #{ status}</if>
+      <if test="null != companyTel and '' !=  companyTel">and company_tel = #{ companyTel}</if>
+      <if test="null != companyEamil and '' !=  companyEamil">and company_eamil = #{ companyEamil}</if>
+      <if test="null != responsibleTel and '' !=  responsibleTel">and responsible_tel = #{ responsibleTel}</if>
+      <if test="null != responsibleEmail and '' !=  responsibleEmail">and responsible_email = #{ responsibleEmail}</if>
+      <if test="null != companyTime and '' !=  companyTime">and company_time = #{ companyTime}</if>
+      <if test="null != responsibleBirthday and '' !=  responsibleBirthday">and responsible_birthday = #{ responsibleBirthday}</if>
+      <if test="null != createTime and '' !=  createTime">and create_time = #{ createTime}</if>
+	</where>
+  </sql>
+  <sql id="custom_resourceDynamicLikeWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id LIKE #{ id}</if>
+      <if test="null != company and '' !=  company">and company LIKE #{ company}</if>
+      <if test="null != size and '' !=  size">and size LIKE #{ size}</if>
+      <if test="null != responsiblePerson and '' !=  responsiblePerson">and responsible_person LIKE #{ responsiblePerson}</if>
+      <if test="null != lead and '' !=  lead">and lead LIKE #{ lead}</if>
+      <if test="null != status and '' !=  status">and status LIKE #{ status}</if>
+      <if test="null != companyTel and '' !=  companyTel">and company_tel LIKE #{ companyTel}</if>
+      <if test="null != companyEamil and '' !=  companyEamil">and company_eamil LIKE #{ companyEamil}</if>
+      <if test="null != responsibleTel and '' !=  responsibleTel">and responsible_tel LIKE #{ responsibleTel}</if>
+      <if test="null != responsibleEmail and '' !=  responsibleEmail">and responsible_email LIKE #{ responsibleEmail}</if>
+      <if test="null != companyTime and '' !=  companyTime">and company_time LIKE #{ companyTime}</if>
+      <if test="null != responsibleBirthday and '' !=  responsibleBirthday">and responsible_birthday LIKE #{ responsibleBirthday}</if>
+      <if test="null != createTime and '' !=  createTime">and create_time LIKE #{ createTime}</if>
+	</where>
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="custom_resourceColumns" /> from  custom_resource where id = #{id}
+  </select>
+  <select id="getOne" parameterType="com.hassdata.hserp.po.CustomResource" resultMap="BaseResultMap">
+    select <include refid="custom_resourceColumns" /> from  custom_resource <include refid="custom_resourceDynamicWhere" /> limit 0 , 1
+  </select>
+  <select id="list" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="custom_resourceColumns" /> from  custom_resource <include refid="custom_resourceDynamicWhere" />
+	<if test="orderBy != null and orderBy != ''">
+          order by ${orderBy}
+      </if>
+  </select>
+  <select id="listPage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="custom_resourceColumns" /> from  custom_resource <include refid="custom_resourceDynamicWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="listLikePage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="custom_resourceColumns" /> from  custom_resource <include refid="custom_resourceDynamicLikeWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="countLike" parameterType="com.hassdata.hserp.po.CustomResource" resultType="java.lang.Long">
+    select count(1) from custom_resource <include refid="custom_resourceDynamicLikeWhere" />
+  </select>
+  <select id="count" parameterType="com.hassdata.hserp.po.CustomResource" resultType="java.lang.Long">
+    select count(1) from custom_resource <include refid="custom_resourceDynamicWhere" />
+  </select>
+  <sql id="save_custom_resource_columns">
+    insert into custom_resource(
+		company ,size ,responsible_person ,lead ,status ,company_tel ,company_eamil ,responsible_tel ,responsible_email ,company_time ,responsible_birthday ,create_time
+	) values
+  </sql>
+  <sql id="save_custom_resource_values">
+    (
+	  #{ company,jdbcType=VARCHAR},
+	  #{ size,jdbcType=TINYINT},
+	  #{ responsiblePerson,jdbcType=VARCHAR},
+	  #{ lead,jdbcType=VARCHAR},
+	  #{ status,jdbcType=TINYINT},
+	  #{ companyTel,jdbcType=VARCHAR},
+	  #{ companyEamil,jdbcType=VARCHAR},
+	  #{ responsibleTel,jdbcType=VARCHAR},
+	  #{ responsibleEmail,jdbcType=VARCHAR},
+	  #{ companyTime,jdbcType=DATE},
+	  #{ responsibleBirthday,jdbcType=DATE},
+	  #{ createTime,jdbcType=TIMESTAMP}
+	)
+  </sql>
+  <insert id="save" keyProperty="id" parameterType="com.hassdata.hserp.po.CustomResource" useGeneratedKeys="true">
+    <include refid="save_custom_resource_columns" /><include refid="save_custom_resource_values" />
+  </insert>
+  <insert id="batchSave" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="save_custom_resource_columns" /><include refid="save_custom_resource_values" />
+	</foreach>
+  </insert>
+  <sql id="custom_resourceUpdate">
+    update custom_resource 
+	<set> 
+      <if test="null != company">company = #{ company,jdbcType=VARCHAR},</if>
+      <if test="null != size">size = #{ size,jdbcType=TINYINT},</if>
+      <if test="null != responsiblePerson">responsible_person = #{ responsiblePerson,jdbcType=VARCHAR},</if>
+      <if test="null != lead">lead = #{ lead,jdbcType=VARCHAR},</if>
+      <if test="null != status">status = #{ status,jdbcType=TINYINT},</if>
+      <if test="null != companyTel">company_tel = #{ companyTel,jdbcType=VARCHAR},</if>
+      <if test="null != companyEamil">company_eamil = #{ companyEamil,jdbcType=VARCHAR},</if>
+      <if test="null != responsibleTel">responsible_tel = #{ responsibleTel,jdbcType=VARCHAR},</if>
+      <if test="null != responsibleEmail">responsible_email = #{ responsibleEmail,jdbcType=VARCHAR},</if>
+      <if test="null != companyTime">company_time = #{ companyTime,jdbcType=DATE},</if>
+      <if test="null != responsibleBirthday">responsible_birthday = #{ responsibleBirthday,jdbcType=DATE},</if>
+      <if test="null != createTime">create_time = #{ createTime,jdbcType=TIMESTAMP}</if>
+	</set>
+	where id = #{id}
+  </sql>
+  <update id="update" parameterType="com.hassdata.hserp.po.CustomResource">
+    <include refid="custom_resourceUpdate" />
+  </update>
+  <update id="batchUpdate" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="custom_resourceUpdate" />
+	</foreach>
+  </update>
+  <delete id="delById">
+    <![CDATA[ delete from custom_resource where id = #{id} ]]>
+  </delete>
+  <delete id="delArray">
+    delete from custom_resource where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="delList">
+    delete from custom_resource where id in
+	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+</mapper>

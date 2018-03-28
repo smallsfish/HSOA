@@ -1,7 +1,6 @@
 package com.hassdata.hserp.base;
 
 import org.apache.ibatis.session.SqlSessionFactory;
-
 import javax.annotation.Resource;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -29,7 +28,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
-    public List<?> list(T t,String orderBy) {
+    public List<T> list(T t,String orderBy) {
         Map<String, Object> map = buildParams(t, orderBy, null, null);
         return this.getMapper().list(map);
     }
@@ -39,6 +38,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
         Map<String, Object> map = buildParams(t, orderBy, fromIndex, pageSize);
         return this.getMapper().listPage(map);
     }
+
 
     @Override
     public List<T> listLikePage(T t,String orderBy, Integer fromIndex, Integer pageSize) {
@@ -72,7 +72,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
-    public int delList(List<?> list) {
+    public int delList(List<T> list) {
         return this.getMapper().delList(list);
     }
 

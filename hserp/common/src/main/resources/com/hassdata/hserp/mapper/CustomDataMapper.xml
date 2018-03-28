@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hassdata.hserp.dao.CustomDataMapper">
+  <resultMap id="BaseResultMap" type="com.hassdata.hserp.po.CustomData">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="custom_data_way" jdbcType="VARCHAR" property="customDataWay" />
+    <result column="custom_data_type" jdbcType="TINYINT" property="customDataType" />
+    <result column="custom_data_name" jdbcType="VARCHAR" property="customDataName" />
+    <result column="custom_data_info" jdbcType="LONGVARCHAR" property="customDataInfo" />
+  </resultMap>
+  <sql id="custom_dataColumns">
+    <![CDATA[ id,cid,custom_data_way,custom_data_type,custom_data_name,custom_data_info ]]>
+  </sql>
+  <sql id="custom_dataDynamicWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id = #{ id}</if>
+      <if test="null != cid and '' !=  cid">and cid = #{ cid}</if>
+      <if test="null != customDataWay and '' !=  customDataWay">and custom_data_way = #{ customDataWay}</if>
+      <if test="null != customDataType and '' !=  customDataType">and custom_data_type = #{ customDataType}</if>
+      <if test="null != customDataName and '' !=  customDataName">and custom_data_name = #{ customDataName}</if>
+      <if test="null != customDataInfo and '' !=  customDataInfo">and custom_data_info = #{ customDataInfo}</if>
+	</where>
+  </sql>
+  <sql id="custom_dataDynamicLikeWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id LIKE #{ id}</if>
+      <if test="null != cid and '' !=  cid">and cid LIKE #{ cid}</if>
+      <if test="null != customDataWay and '' !=  customDataWay">and custom_data_way LIKE #{ customDataWay}</if>
+      <if test="null != customDataType and '' !=  customDataType">and custom_data_type LIKE #{ customDataType}</if>
+      <if test="null != customDataName and '' !=  customDataName">and custom_data_name LIKE #{ customDataName}</if>
+      <if test="null != customDataInfo and '' !=  customDataInfo">and custom_data_info LIKE #{ customDataInfo}</if>
+	</where>
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="custom_dataColumns" /> from  custom_data where id = #{id}
+  </select>
+  <select id="getOne" parameterType="com.hassdata.hserp.po.CustomData" resultMap="BaseResultMap">
+    select <include refid="custom_dataColumns" /> from  custom_data <include refid="custom_dataDynamicWhere" /> limit 0 , 1
+  </select>
+  <select id="list" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="custom_dataColumns" /> from  custom_data <include refid="custom_dataDynamicWhere" />
+	<if test="orderBy != null and orderBy != ''">
+          order by ${orderBy}
+      </if>
+  </select>
+  <select id="listPage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="custom_dataColumns" /> from  custom_data <include refid="custom_dataDynamicWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="listLikePage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="custom_dataColumns" /> from  custom_data <include refid="custom_dataDynamicLikeWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="countLike" parameterType="com.hassdata.hserp.po.CustomData" resultType="java.lang.Long">
+    select count(1) from custom_data <include refid="custom_dataDynamicLikeWhere" />
+  </select>
+  <select id="count" parameterType="com.hassdata.hserp.po.CustomData" resultType="java.lang.Long">
+    select count(1) from custom_data <include refid="custom_dataDynamicWhere" />
+  </select>
+  <sql id="save_custom_data_columns">
+    insert into custom_data(
+		cid ,custom_data_way ,custom_data_type ,custom_data_name ,custom_data_info
+	) values
+  </sql>
+  <sql id="save_custom_data_values">
+    (
+	  #{ cid,jdbcType=INTEGER},
+	  #{ customDataWay,jdbcType=VARCHAR},
+	  #{ customDataType,jdbcType=TINYINT},
+	  #{ customDataName,jdbcType=VARCHAR},
+	  #{ customDataInfo,jdbcType=LONGVARCHAR}
+	)
+  </sql>
+  <insert id="save" keyProperty="id" parameterType="com.hassdata.hserp.po.CustomData" useGeneratedKeys="true">
+    <include refid="save_custom_data_columns" /><include refid="save_custom_data_values" />
+  </insert>
+  <insert id="batchSave" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="save_custom_data_columns" /><include refid="save_custom_data_values" />
+	</foreach>
+  </insert>
+  <sql id="custom_dataUpdate">
+    update custom_data 
+	<set> 
+      <if test="null != cid">cid = #{ cid,jdbcType=INTEGER},</if>
+      <if test="null != customDataWay">custom_data_way = #{ customDataWay,jdbcType=VARCHAR},</if>
+      <if test="null != customDataType">custom_data_type = #{ customDataType,jdbcType=TINYINT},</if>
+      <if test="null != customDataName">custom_data_name = #{ customDataName,jdbcType=VARCHAR},</if>
+      <if test="null != customDataInfo">custom_data_info = #{ customDataInfo,jdbcType=LONGVARCHAR}</if>
+	</set>
+	where id = #{id}
+  </sql>
+  <update id="update" parameterType="com.hassdata.hserp.po.CustomData">
+    <include refid="custom_dataUpdate" />
+  </update>
+  <update id="batchUpdate" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="custom_dataUpdate" />
+	</foreach>
+  </update>
+  <delete id="delById">
+    <![CDATA[ delete from custom_data where id = #{id} ]]>
+  </delete>
+  <delete id="delArray">
+    delete from custom_data where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="delList">
+    delete from custom_data where id in
+	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+</mapper>

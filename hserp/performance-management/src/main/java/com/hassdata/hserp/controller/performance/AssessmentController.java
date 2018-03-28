@@ -1,7 +1,9 @@
 package com.hassdata.hserp.controller.performance;
 
 import com.hassdata.hserp.po.Assessment;
+import com.hassdata.hserp.po.HumanEmp;
 import com.hassdata.hserp.service.AssessmentService;
+import com.hassdata.hserp.service.HumanEmpService;
 import com.hassdata.hserp.utils.ServerResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class AssessmentController {
 
     @Autowired
     private AssessmentService assessmentService;
+    @Autowired
+    private HumanEmpService humanEmpService;
 
     //获取评论列表
     @RequestMapping("getAssessmentList")
@@ -34,6 +38,10 @@ public class AssessmentController {
         List<Assessment> assessmentList = assessmentService.listLikePage(assessment,orerBy,page,limit);
         Long totalCount = assessmentService.countLike(assessment);
 
+        for (Assessment a:assessmentList) {
+            HumanEmp humanEmp = humanEmpService.getById(a.getUserId());
+            a.setUserName(humanEmp.getName());
+        }
         return ServerResponse.createBySuccessForLayuiTable("",assessmentList,totalCount);
     }
 
@@ -47,6 +55,8 @@ public class AssessmentController {
         }
 
         Assessment assessment = (Assessment) assessmentService.getById(id);
+        HumanEmp humanEmp = humanEmpService.getById(assessment.getUserId());
+        assessment.setUserName(humanEmp.getName());
 
         return ServerResponse.createBySuccess(assessment);
     }
@@ -60,13 +70,8 @@ public class AssessmentController {
             return ServerResponse.createByErrorMessage("必填项不得为空");
         }
 
-//        if(null == assessment.getAssessmentId() || assessment.getAssessmentId() == 0){
-//            return ServerResponse.createByErrorMessage("必填项不得为空");
-//        }
-
-        if(StringUtils.isEmpty(assessment.getUserName())){
-            return ServerResponse.createByErrorMessage("必填项不得为空");
-        }
+        HumanEmp humanEmp = humanEmpService.getById(assessment.getUserId());
+        assessment.setUserName(humanEmp.getName());
 
        assessmentService.save(assessment);
 
@@ -82,6 +87,32 @@ public class AssessmentController {
         if(null == assessment.getId() || assessment.getId() == 0){
             return ServerResponse.createByErrorMessage("必填项不得为空");
         }
+
+        Assessment assessment1 = (Assessment) assessmentService.getById(assessment.getId());
+
+        HumanEmp humanEmp = humanEmpService.getById(assessment1.getUserId());
+
+        assessment.setUserName(humanEmp.getName());
+
+        assessmentService.update(assessment);
+
+        return ServerResponse.createBySuccess(assessment);
+    }
+
+    //修改评论根据userId
+    @RequestMapping("updateAssessmentByUserId")
+    public @ResponseBody
+    ServerResponse updateAssessmentByUserId(Assessment assessment) {
+
+//        System.out.println(assessment.getUserName());
+        if(null == assessment.getUserId() || assessment.getUserId() == 0){
+            return ServerResponse.createByErrorMessage("必填项不得为空");
+        }
+
+        assessment = (Assessment) assessmentService.getOne(assessment);
+
+        HumanEmp humanEmp = humanEmpService.getById(assessment.getUserId());
+        assessment.setUserName(humanEmp.getName());
 
         assessmentService.update(assessment);
 

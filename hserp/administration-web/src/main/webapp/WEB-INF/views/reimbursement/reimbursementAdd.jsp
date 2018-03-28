@@ -2,103 +2,45 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
+    <jsp:include page="../base.jsp"/>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="Keywords" content="IO"/>
     <meta name="description" content="海思数据中心IO管理系统"/>
-    <title>人事管理新增</title>
+    <title>公章管理新增</title>
 
     <link rel="stylesheet" href="/static/layui/css/layui.css"/>
     <link rel='stylesheet' type="text/css" href='/static/css/credit.css'>
-    <jsp:include page="../base.jsp"/>
+
+    <!-- 配置文件 -->
+    <script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="/static/ueditor/ueditor.all.js"></script>
+
+
 
 </head>
 <body>
-<div class='humanAdd mt'>
-
-    <form class="layui-form" id="humanAdd">
+<div class='mt'>
+    <form class="layui-form" id="rmbAdd">
 
         <div class="layui-form-item">
             <label class="layui-form-label">姓名:</label>
             <div class="layui-input-inline">
-                <input type="text" placeholder="请输入姓名" name="name" class="layui-input" required lay-verify="required"
+                <input type="text" placeholder="请输入姓名" name="user" class="layui-input" required lay-verify="required"
                        autocomplete="off">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">性别:</label>
+            <label class="layui-form-label">使用明细:</label>
             <div class="layui-input-inline">
-                <input type="radio" name="sex" value="true" title="男" checked="">
-                <input type="radio" name="sex" value="false" title="女">
+                <textarea id="newsContent"  name="usedetails" style="width: 500px"></textarea>
             </div>
         </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">身份证号:</label>
-            <div class="layui-input-inline">
-                <input type="text" placeholder="请输入身份证号" name="idCard" lay-verify="identity" placeholder=""
-                       autocomplete="off" class="layui-input">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">手机号码:</label>
-            <div class="layui-input-inline">
-                <input type="tel" name="tel" placeholder="请输入手机号码" lay-verify="required|phone" autocomplete="off"
-                       class="layui-input">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">学历:</label>
-            <div class="layui-input-inline">
-                <input type="text" placeholder="请输入学历" name="education" class="layui-input" required
-                       lay-verify="required" autocomplete="off">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">职员所属部门:</label>
-            <div class="layui-input-block" style="z-index: 99;">
-                <select name="deptId" id="dept">
-
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">工资:</label>
-            <div class="layui-input-inline">
-                <input type="text" placeholder="请输入工资" name="salary" class="layui-input" required lay-verify="required"
-                       autocomplete="off">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">实习时间:</label>
-            <div class="layui-input-inline">
-                <input type="text" placeholder="请选择实习时间" name="practiceTime" class="layui-input" id="date"
-                       lay-verify="date" autocomplete="off">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">转正时间:</label>
-            <div class="layui-input-inline">
-                <input type="text" placeholder="请选择转正时间" name="regulTime" class="layui-input" id="date1"
-                       lay-verify="date" autocomplete="off">
-            </div>
-        </div>
-
-        <%--<div class="layui-form-item">--%>
-            <%--<label class="layui-form-label">是否离职:</label>--%>
-            <%--<div class="layui-input-inline">--%>
-                <%--<input type="radio" name="status" value="0" title="是">--%>
-                <%--<input type="radio" name="status" value="1" title="否" checked>--%>
-            <%--</div>--%>
-        <%--</div>--%>
 
         <div class="layui-form-item">
             <div class="layui-input-inline sub" style="margin-left: 150px;">
-                <button class="layui-btn" lay-submit="" lay-filter="humanAdd">立即提交</button>
+                <button class="layui-btn" lay-submit="" lay-filter="rmbAdd">立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
@@ -108,25 +50,18 @@
 
 <script>
     var layer = null;
-    layui.use(['form', 'layer', 'laydate'], function () {
+    layui.use(['form', 'layer'], function () {
         var form = layui.form;
-        laydate = layui.laydate;
         layer = layui.layer;
 
-        laydate.render({
-            elem: '#date'
-        });
-        laydate.render({
-            elem: '#date1'
-        });
-        form.on('submit(humanAdd)', function (data) {
+        form.on('submit(rmbAdd)', function (data) {
             var loadIndex = layer.load();
-            var fromData = new FormData($("#humanAdd")[0]);
+            var fromData = new FormData($("#rmbAdd")[0]);
 
             $.ajax({
                 type: "POST",
                 dataType: "json",
-                url: 'system/human/api/addEmp',
+                url: 'system/administration/api/chapterAdd',
                 data: fromData,
                 async: false,
                 cache: false,
@@ -134,34 +69,23 @@
                 processData: false,
                 success: function (result) {
                     layer.close(loadIndex);
-                    if (result.status == 0) {
-                        $("#humanAdd")[0].reset();
+                    if (result.code == 0) {
+                        $("#rmbAdd")[0].reset();
                         window.parent.refreach();
                     }
                     layer.msg(result.msg);
                 },
                 error: function (data) {
                     layer.close(loadIndex);
-                    alert("出现异常！");
+                    layer.msg("出现异常！");
                 }
             });
             return false; //阻止-
         });
-        $.get('system/human/api/getDeptList', {},
-            function (result) {
-                if (result.code == 0) {
-                    var html = '<option value="">请选择部门</option>';
-                    $(result.data).each(
-                        function (i, item) {
-                            html += '<option value="' + item.id + '">' + item.name + '</option>';
-                        });
-                    $("#dept").html(html);
-                    form.render();
-                } else {
-                    console.log(result.msg);
-                }
-            });
     });
+</script>
+<script type="text/javascript">
+    var ue = UE.getEditor("newsContent");
 </script>
 </body>
 </html>

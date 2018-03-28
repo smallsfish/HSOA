@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="Keywords" content="IO"/>
     <meta name="description" content="海思数据中心IO管理系统"/>
-    <title>人事管理新增</title>
+    <title>项目管理修改</title>
 
     <link rel="stylesheet" href="/static/layui/css/layui.css"/>
     <link rel='stylesheet' type="text/css" href='/static/css/credit.css'>

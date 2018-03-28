@@ -4,15 +4,16 @@ import com.hassdata.hserp.dto.AddressBookModel;
 import com.hassdata.hserp.po.HumanAddressBook;
 import com.hassdata.hserp.po.HumanDept;
 import com.hassdata.hserp.po.HumanEmp;
+import com.hassdata.hserp.po.HumanTreat;
 import com.hassdata.hserp.service.HumanAddressBookService;
 import com.hassdata.hserp.service.HumanDeptService;
 import com.hassdata.hserp.service.HumanEmpService;
+import com.hassdata.hserp.service.HumanTreatService;
 import com.hassdata.hserp.utils.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,6 +35,8 @@ public class HumanAddressBookController {
     private HumanDeptService humanDeptService;
     @Autowired
     private HumanEmpService humanEmpService;
+    @Autowired
+    private HumanTreatService humanTreatService;
 
     //获取储备人员列表
     @RequestMapping("getAddressBookList")
@@ -48,7 +51,7 @@ public class HumanAddressBookController {
             }
             humanAddressBooks = humanAddressBookService.listLikePage(addressBook, "id ASC", fromIndex, pageSize);
             if (humanAddressBooks.size() > 0){
-                List<HumanDept> humanDepts = (List<HumanDept>)humanDeptService.list(null, null);
+                List<HumanDept> humanDepts = humanDeptService.list(null, null);
                 Integer index = 0;
                 addressBookModels = new ArrayList<>();
                 for (HumanAddressBook book: humanAddressBooks) {
@@ -96,6 +99,16 @@ public class HumanAddressBookController {
         }
         try {
             humanAddressBookService.update(addressBook);
+            addressBook = humanAddressBookService.getById(addressBook.getId());
+            //级联更新员工信息
+            HumanEmp emp = new HumanEmp();
+            emp.setId(addressBook.getEid());
+            emp = humanEmpService.getOne(emp);
+            if (emp != null){
+                emp.setId(addressBook.getEid());
+                emp.setTel(addressBook.getTel());
+                humanEmpService.update(emp);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return  ServerResponse.createByErrorMessage("修改失败!");
@@ -103,7 +116,7 @@ public class HumanAddressBookController {
         return ServerResponse.createBySuccessMessage("修改成功!");
     }
 
-    //添加储备人员
+    //添加员工通讯录
     @RequestMapping("addAddressBook")
     @ResponseBody
     public ServerResponse addAddressBook(HumanAddressBook addressBook){

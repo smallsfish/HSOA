@@ -5,12 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,7 +58,7 @@ public class FileUploadUtils {
 		if (filename != null && !filename.trim().equals("")) {
 			// 如果上传的文件不是图片，那么不上传
 			String allImgExt = type;
-			String extName = filename.substring(filename.indexOf("."), filename.length());
+			String extName = filename.substring(filename.lastIndexOf("."), filename.length());
 			if (allImgExt.indexOf(extName + "|") == -1) {
 				message = "该文件类型不允许上传。请上传 " + allImgExt + " 类型的文件，当前文件类型为" + extName;
 				success = false;

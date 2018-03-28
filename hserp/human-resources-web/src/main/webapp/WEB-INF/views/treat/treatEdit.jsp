@@ -20,7 +20,7 @@
         <div class="layui-form-item" >
             <label class="layui-form-label">姓名:</label>
             <div class="layui-input-inline">
-                <input type="text" placeholder="请输入姓名" name="name" class="layui-input" required lay-verify="required" autocomplete="off" >
+                <input type="text" placeholder="请输入姓名" name="name" class="layui-input" required lay-verify="required" autocomplete="off" disabled>
             </div>
         </div>
 
@@ -34,7 +34,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">所属部门:</label>
             <div  class="layui-input-block" style="z-index: 99;">
-                <select name="deptId" id="deptId"></select>
+                <select name="deptId" id="deptId" disabled></select>
             </div>
         </div>
 
@@ -53,7 +53,6 @@
         layer = layui.layer;
 
         $.get('system/human/api/getTreatById',{ "id" : window.parent.treatId },function (result) {
-            layer.msg(JSON.stringify(result));
             if(result.code == 0){
                 $("input[name=name]").val(result.data.name);
                 $("input[name=salary]").val(result.data.salary);
@@ -87,7 +86,7 @@
                 },
                 error: function (data) {
                     layer.close(loadIndex);
-                    layer.alert("出现异常！");
+                    layer.msg("出现异常！");
                 }
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。

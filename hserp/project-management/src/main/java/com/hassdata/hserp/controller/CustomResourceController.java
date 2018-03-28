@@ -55,6 +55,7 @@ public class CustomResourceController {
         CustomResource customResource = new CustomResource();
         customResource.setId(id);
         customResource.setStatus(CUSTOMRESOURCE_DEL);
+        customResourceService.update(customResource);
         return ServerResponse.createBySuccessMessage("删除成功");
     }
 
@@ -82,7 +83,22 @@ public class CustomResourceController {
         if (customResource == null) {
             return ServerResponse.createBySuccessMessage("未查到数据");
         } else {
-            return ServerResponse.createBySuccess("查询成功", customResource);
+            CustomResourceDTO customResourceDTO=new CustomResourceDTO();
+            customResourceDTO.setId(customResource.getId());
+            customResourceDTO.setCompany(customResource.getCompany());
+            customResourceDTO.setCompanyEamil(customResource.getCompanyEamil());
+            customResourceDTO.setCompanyTel(customResource.getCompanyTel());
+            customResourceDTO.setCompanyTime(DateUtils.dateFormatYMD(customResource.getCompanyTime()));
+            customResourceDTO.setCreateTime(DateUtils.dateFormatYMDHMS(customResource.getCreateTime()));
+            customResourceDTO.setOrderNumber(null);
+            customResourceDTO.setLead(customResource.getLead());
+            customResourceDTO.setResponsibleBirthday(DateUtils.dateFormatYMD(customResource.getResponsibleBirthday()));
+            customResourceDTO.setResponsiblePerson(customResource.getResponsiblePerson());
+            customResourceDTO.setResponsibleEmail(customResource.getResponsibleEmail());
+            customResourceDTO.setResponsibleTel(customResource.getResponsibleTel());
+            customResourceDTO.setSize(customResource.getSize());
+            customResourceDTO.setStatus(customResource.getStatus());
+            return ServerResponse.createBySuccess("查询成功", customResourceDTO);
         }
     }
 

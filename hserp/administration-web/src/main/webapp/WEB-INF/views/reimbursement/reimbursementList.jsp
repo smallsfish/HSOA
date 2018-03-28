@@ -5,7 +5,7 @@
 
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="Keywords" content="IO"/>
-    <meta name="description" content="海思数据中心OA管理系统"/>
+    <meta name="description" content="海思数据中心IO管理系统"/>
     <title>公章管理列表</title>
 
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_562689_bvfsvay973edbo6r.css">
@@ -31,15 +31,13 @@
 
     <table class="layui-hide" id="test" lay-filter="infoTable"></table>
 </div>
-
-
 <script>
-    var reimbursementId=null;
+    var rmbId=null;
     var searchTable;
 
     layui.use('table', function(){
         var loadIndex;
-        var twidth = $("#test").width;
+        var twidth = $("#test").width();
 
         layui.use(['element', 'table'], function () {
             var element = layui.element;
@@ -49,25 +47,25 @@
             });
 
             searchTable = table.render({
-            elem: '#test'
-            ,url:'system/reimbursement/api/reimbursementList'
-            ,height: 'full-78'
-            ,cols: [[
-                ,{field:'user', width: 160, title: '姓名', align: 'center'}
-                ,{field:'usedetails', width: twidth*0.1, title: '学历',  align: 'center'}
-                ,{field:'usetime', width: twidth*0.1, title: '实习时间', sort: true, align: 'center'}
-                ,{
-                    width: twidth * 0.18,
-                    fixed: 'right',
-                    align: 'center',
-                    toolbar: '#infoToolBar',
-                    title: '操作'
-                }
-            ]]
-            , limits: [15, 30, 45, 60, 75]
-            , limit: 15
-            ,page: true
-        });
+                elem: '#test'
+                ,url:'system/administration/api/chapterList'
+                ,height: 'full-78'
+                ,cols: [[
+                    {field:'user', width: 160, title: '姓名', align: 'center'}
+                    ,{field:'usedetails', width: twidth*0.1, title: '使用明细',  align: 'center'}
+                    ,{field:'usetime', width: 200, title: '使用时间',  align: 'center'}
+                    ,{
+                        width: 200,
+                        fixed: 'right',
+                        align: 'center',
+                        toolbar: '#infoToolBar',
+                        title: '操作'
+                    }
+                ]]
+                , limits: [15, 30, 45, 60, 75]
+                , limit: 15
+                ,page: true
+            });
 
             table.on('tool(infoTable)', function (obj) {
                 var data = obj.data;
@@ -79,30 +77,30 @@
 
                         loadIndex = layer.load();
                         $.ajax({
-                            type: "GET",
+                            type: "POST",
                             dataType: "json",
-                            url: 'system/reimbursement/api/reimbursementDelete',
+                            url: 'system/administration/api/chapterDelete',
                             data: {'id': data.id},
                             success: function (result) {
                                 layer.close(loadIndex);
                                 if (result.status == 0) {
                                     obj.del();
-                                    layer.alert("删除成功！");
+                                    layer.msg("删除成功！");
+                                    refreach();
                                 }else if(result.status==1){
-                                    layer.alert("删除失败！");
+                                    layer.msg("删除失败！");
                                 }else if(result.status==2){
-                                    layer.alert("请求参数异常！");
+                                    layer.msg("请求参数异常！");
                                 }else if(result.status==10){
-                                    layer.alert("请重新登录。。。");
+                                    layer.msg("请重新登录。。。");
                                     window.location.href="system/login";
                                 }else if(result.status==20){
-                                    layer.alert("你没有操作权限！");
+                                    layer.msg("你没有操作权限！");
                                 }
-
                             },
                             error: function (data) {
                                 layer.close(loadIndex);
-                                layer.alert("出现异常！请刷新页面重试");
+                                layer.msg("出现异常！请刷新页面重试");
                             }
                         });
                     });
@@ -115,22 +113,19 @@
 
     function searchSubmit() {
         var userName = $(":input[name='user']").val();
-
         searchTable.reload({
-            url: 'system/reimbursement/api/reimbursementList?user=' + userName
+            url: 'system/administration/api/chapterList?user=' + userName
         });
     }
-
     function editorUser(data) {
         layui.use('layer', function () {
             var layer = layui.layer;
-            reimbursementId=data.id;
-
+            rmbId = data.id;
             layer.open({
-                title: data.name + ' 用户编辑',
+                title: data.user + ' 用户编辑',
                 type: 2,
                 area: ['50%', '70%'],
-                content: 'reimbursement/reimbursementEdit?id=' + data.id,
+                content: 'system/administration/reimbursementEdit?id=' + data.id,
             });
         });
     }
@@ -142,14 +137,13 @@
                 title: '添加公章信息',
                 type: 2,
                 area: ['50%', '70%'],
-                content: 'reimbursement/reimbursementAdd'
+                content: 'system/administration/reimbursementAdd'
             });
         });
     }
-
     function refreach() {
         searchTable.reload({
-            url:'system/reimbursement/api/reimbursementList'
+            url:'system/administration/api/chapterList'
         });
     }
 </script>

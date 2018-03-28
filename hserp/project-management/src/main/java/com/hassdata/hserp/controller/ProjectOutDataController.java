@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,7 +47,7 @@ public class ProjectOutDataController {
         }
         String fn = file.getOriginalFilename();
         String suffix = fn.substring(fn.lastIndexOf('.') + 1, fn.length());
-        String path = request.getSession().getServletContext().getRealPath("uploadFile/ProjectOutData");
+        String path = request.getSession().getServletContext().getRealPath("static/uploadFile/ProjectOutData");
         String fileName = new Date().getTime() + "." + suffix;
         try {
             FileUploadUtils.uploadSingleFile(path, fileName, file.getInputStream());
@@ -53,7 +55,7 @@ public class ProjectOutDataController {
             e.printStackTrace();
             return ServerResponse.createByErrorMessage("上传文件失败");
         }
-        projectOutData.setProjectOutDataWay("uploadFile/ProjectOutData/" + fileName);
+        projectOutData.setProjectOutDataWay("static/uploadFile/ProjectOutData/" + fileName);
         projectOutDataService.save(projectOutData);
         return ServerResponse.createBySuccessMessage("添加成功");
     }
@@ -79,7 +81,7 @@ public class ProjectOutDataController {
      * @return
      */
     @RequestMapping(value = "updateProjectOutDataFile", method = RequestMethod.POST)
-    public ServerResponse updateProjectDataFile(HttpServletRequest request, Integer id, MultipartFile file) {
+    public ServerResponse updateProjectDataFile(HttpServletRequest request, Integer id, Integer projectOutDataType, MultipartFile file) {
         ProjectOutData projectOutData = new ProjectOutData();
         projectOutData.setId(id);
         if (file.isEmpty()) {
@@ -87,7 +89,7 @@ public class ProjectOutDataController {
         }
         String fn = file.getOriginalFilename();
         String suffix = fn.substring(fn.lastIndexOf('.') + 1, fn.length());
-        String path = request.getSession().getServletContext().getRealPath("uploadFile/ProjectOutData");
+        String path = request.getSession().getServletContext().getRealPath("static/uploadFile/ProjectOutData");
         String fileName = new Date().getTime() + "." + suffix;
         try {
             FileUploadUtils.uploadSingleFile(path, fileName, file.getInputStream());
@@ -95,7 +97,8 @@ public class ProjectOutDataController {
             e.printStackTrace();
             return ServerResponse.createByErrorMessage("上传文件失败");
         }
-        projectOutData.setProjectOutDataWay("uploadFile/ProjectOutData/" + fileName);
+        projectOutData.setProjectOutDataWay("static/uploadFile/ProjectOutData/" + fileName);
+        projectOutData.setProjectOutDataType(projectOutDataType.byteValue());
         projectOutDataService.update(projectOutData);
         return ServerResponse.createBySuccessMessage("修改成功");
     }
@@ -128,9 +131,9 @@ public class ProjectOutDataController {
      * @return
      */
     @RequestMapping(value = "getProjectOutDataList",method = RequestMethod.GET)
-    public ServerResponse getProjectDataList(@RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "30") Integer limit){
-        long count=projectOutDataService.count(null);
-        List<ProjectOutData> projectOutDataList=projectOutDataService.listPage(null,"id DESC",page,limit);
+    public ServerResponse getProjectDataList(ProjectOutData projectOutData,@RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "30") Integer limit){
+        long count=projectOutDataService.count(projectOutData);
+        List<ProjectOutData> projectOutDataList=projectOutDataService.listPage(projectOutData,"id DESC",page,limit);
         List<ProjectOutDataDTO> projectOutDataDTOS=new ArrayList<>();
         getProjectOutDataDTO(projectOutDataList, projectOutDataDTOS);
         return ServerResponse.createBySuccessForLayuiTable("查找成功",projectOutDataDTOS,count);
@@ -146,7 +149,11 @@ public class ProjectOutDataController {
     @RequestMapping(value = "getProjectOutDataByLike",method = RequestMethod.GET)
     public ServerResponse getProjectOutDataByLike(ProjectOutData projectOutData,@RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "30") Integer limit){
         if(projectOutData.getProjectOutDataName()!=null && !"".equals(projectOutData.getProjectOutDataName())){
-            projectOutData.setProjectOutDataName("%"+projectOutData.getProjectOutDataName()+"%");
+            try {
+                projectOutData.setProjectOutDataName("%"+ URLDecoder.decode(URLDecoder.decode(projectOutData.getProjectOutDataName(),"UTF-8"),"UTF-8")+"%");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
         long count=projectOutDataService.countLike(projectOutData);
         List<ProjectOutData> projectOutDataList=projectOutDataService.listLikePage(projectOutData,"id DESC",page,limit);

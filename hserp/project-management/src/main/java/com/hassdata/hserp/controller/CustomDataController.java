@@ -72,6 +72,12 @@ public class CustomDataController {
         return ServerResponse.createBySuccessForLayuiTable("查找成功", customDataDTOS, count);
     }
 
+    @RequestMapping(value = "customDataDel", method = RequestMethod.GET)
+    public ServerResponse customDataDel(Integer id) {
+        customDataService.delById(id);
+        return ServerResponse.createBySuccessMessage("删除成功");
+    }
+
     /**
      * 根据客户资料名称模糊查询客户资料
      *
@@ -120,7 +126,7 @@ public class CustomDataController {
         }
         String fn = file.getOriginalFilename();
         String suffix = fn.substring(fn.lastIndexOf('.') + 1, fn.length());
-        String path = request.getSession().getServletContext().getRealPath("uploadFile/CustomData");
+        String path = request.getSession().getServletContext().getRealPath("static/uploadFile/CustomData");
         String fileName = new Date().getTime() + "." + suffix;
         try {
             FileUploadUtils.uploadSingleFile(path, fileName, file.getInputStream());
@@ -128,7 +134,7 @@ public class CustomDataController {
             e.printStackTrace();
             return ServerResponse.createByErrorMessage("上传文件失败");
         }
-        customData.setCustomDataWay("uploadFile/CustomData/"+fileName);
+        customData.setCustomDataWay("static/uploadFile/CustomData/"+fileName);
         customDataService.save(customData);
         return ServerResponse.createBySuccessMessage("添加成功");
     }
@@ -141,15 +147,16 @@ public class CustomDataController {
      * @return
      */
     @RequestMapping(value = "updateCustomDataFile",method = RequestMethod.POST)
-    public ServerResponse updateCustomDataFile(HttpServletRequest request,Integer id,MultipartFile file){
+    public ServerResponse updateCustomDataFile(HttpServletRequest request,Integer id,String customDataType,MultipartFile file){
         CustomData customData=new CustomData();
         customData.setId(id);
+        customData.setCustomDataType(Byte.parseByte(customDataType));
         if (file.isEmpty()) {
             return ServerResponse.createByErrorMessage("请上传文件！");
         }
         String fn = file.getOriginalFilename();
         String suffix = fn.substring(fn.lastIndexOf('.') + 1, fn.length());
-        String path = request.getSession().getServletContext().getRealPath("uploadFile/CustomData");
+        String path = request.getSession().getServletContext().getRealPath("static/uploadFile/CustomData");
         String fileName = new Date().getTime() + "." + suffix;
         try {
             FileUploadUtils.uploadSingleFile(path, fileName, file.getInputStream());
@@ -157,7 +164,7 @@ public class CustomDataController {
             e.printStackTrace();
             return ServerResponse.createByErrorMessage("上传文件失败");
         }
-        customData.setCustomDataWay("uploadFile/CustomData/"+fileName);
+        customData.setCustomDataWay("static/uploadFile/CustomData/"+fileName);
         customDataService.update(customData);
         return ServerResponse.createBySuccessMessage("修改成功");
     }

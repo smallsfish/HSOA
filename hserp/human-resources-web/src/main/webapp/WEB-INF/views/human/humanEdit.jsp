@@ -59,12 +59,12 @@
                 <select name="deptId" id="dept"></select>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">工资:</label>
-            <div class="layui-input-inline">
-                <input type="text" placeholder="请输入工资" name="salary" class="layui-input" required lay-verify="required" autocomplete="off" >
-            </div>
-        </div>
+        <%--<div class="layui-form-item">--%>
+            <%--<label class="layui-form-label">工资:</label>--%>
+            <%--<div class="layui-input-inline">--%>
+                <%--<input type="text" placeholder="请输入工资" name="salary" class="layui-input" required lay-verify="required" autocomplete="off" >--%>
+            <%--</div>--%>
+        <%--</div>--%>
 
         <div class="layui-form-item">
             <label class="layui-form-label">实习时间:</label>
@@ -110,7 +110,7 @@
                 $("input[name=tel]").val(result.data.tel);
                 $("input[name=education]").val(result.data.education);
                 $("select[name=deptId]").val(result.data.id);
-                $("input[name=salary]").val(result.data.salary);
+                // $("input[name=salary]").val(result.data.salary);
                 $("input[name=practiceTime]").val(result.data.practiceTime);
                 $("input[name=regulTime]").val(result.data.regulTime);
                 console.log(result.data.id);
@@ -136,6 +136,21 @@
         });
 
         form.on('submit(humanEdit)', function (data) {
+
+            $.ajax({
+                type:"POST",
+                dataType:"json",
+                url: 'system/performance/updateAssessmentByUserId',
+                data : {
+                    userId : window.parent.humanId
+                },
+                success : function(result){
+                    console.log(result);
+                }
+            });
+
+
+
             var loadIndex = layer.load();
             var fromData = new FormData($("#humanEdit")[0]);
             fromData.append("id",window.parent.humanId);
@@ -158,7 +173,7 @@
                 },
                 error: function (data) {
                     layer.close(loadIndex);
-                    layer.alert("出现异常！");
+                    layer.msg("出现异常！");
                 }
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。

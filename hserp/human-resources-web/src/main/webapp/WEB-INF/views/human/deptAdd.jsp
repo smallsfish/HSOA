@@ -63,7 +63,7 @@
                 },
                 error: function (data) {
                     layer.close(loadIndex);
-                    alert("出现异常！");
+                    layer.msg("出现异常！");
                 }
             });
             return false;

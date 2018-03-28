@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hassdata.hserp.dao.RoleResourceMapper">
+    <resultMap id="BaseResultMap" type="com.hassdata.hserp.po.RoleResource">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="rid" jdbcType="INTEGER" property="rid"/>
+        <result column="reid" jdbcType="INTEGER" property="reid"/>
+    </resultMap>
+    <sql id="role_resourceColumns">
+    <![CDATA[
+
+         id,rid,reid
+
+        ]]>
+  </sql>
+    <sql id="role_resourceDynamicWhere">
+        <where>
+            <if test="null != id and '' !=  id">and id = #{ id}</if>
+            <if test="null != rid and '' !=  rid">and rid = #{ rid}</if>
+            <if test="null != reid and '' !=  reid">and reid = #{ reid}</if>
+        </where>
+    </sql>
+    <sql id="role_resourceDynamicLikeWhere">
+        <where>
+            <if test="null != id and '' !=  id">and id LIKE #{ id}</if>
+            <if test="null != rid and '' !=  rid">and rid LIKE #{ rid}</if>
+            <if test="null != reid and '' !=  reid">and reid LIKE #{ reid}</if>
+        </where>
+    </sql>
+    <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="role_resourceColumns"/>
+        from role_resource where id = #{id}
+    </select>
+    <select id="getOne" parameterType="com.hassdata.hserp.po.RoleResource" resultMap="BaseResultMap">
+        select
+        <include refid="role_resourceColumns"/>
+        from role_resource
+        <include refid="role_resourceDynamicWhere"/>
+        limit 0 , 1
+    </select>
+    <select id="list" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="role_resourceColumns"/>
+        from role_resource
+        <include refid="role_resourceDynamicWhere"/>
+        <if test="orderBy != null and orderBy != ''">
+            order by ${orderBy}
+        </if>
+    </select>
+    <select id="listPage" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="role_resourceColumns"/>
+        from role_resource
+        <include refid="role_resourceDynamicWhere"/>
+        <if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+    </select>
+    <select id="listLikePage" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="role_resourceColumns"/>
+        from role_resource
+        <include refid="role_resourceDynamicLikeWhere"/>
+        <if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+    </select>
+    <select id="countLike" parameterType="com.hassdata.hserp.po.RoleResource" resultType="java.lang.Long">
+        select count(1) from role_resource
+        <include refid="role_resourceDynamicLikeWhere"/>
+    </select>
+    <select id="count" parameterType="com.hassdata.hserp.po.RoleResource" resultType="java.lang.Long">
+        select count(1) from role_resource
+        <include refid="role_resourceDynamicWhere"/>
+    </select>
+    <sql id="save_role_resource_columns">
+    insert into role_resource(
+		rid ,reid
+	) values
+  </sql>
+    <sql id="save_role_resource_values">
+    (
+	  #{ rid,jdbcType=INTEGER},
+	  #{ reid,jdbcType=INTEGER}
+	)
+  </sql>
+    <insert id="save" keyProperty="id" parameterType="com.hassdata.hserp.po.RoleResource" useGeneratedKeys="true">
+        <include refid="save_role_resource_columns"/>
+        <include refid="save_role_resource_values"/>
+    </insert>
+    <insert id="batchSave" parameterType="list">
+        <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+            <include refid="save_role_resource_columns"/>
+            <include refid="save_role_resource_values"/>
+        </foreach>
+    </insert>
+    <sql id="role_resourceUpdate">
+        update role_resource
+        <set>
+            <if test="null != rid">rid = #{ rid,jdbcType=INTEGER},</if>
+            <if test="null != reid">reid = #{ reid,jdbcType=INTEGER}</if>
+        </set>
+        where id = #{id}
+    </sql>
+    <update id="update" parameterType="com.hassdata.hserp.po.RoleResource">
+        <include refid="role_resourceUpdate"/>
+    </update>
+    <update id="batchUpdate" parameterType="list">
+        <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+            <include refid="role_resourceUpdate"/>
+        </foreach>
+    </update>
+    <update id="updateByRoleId">
+      <![CDATA[
+
+         UPDATE role_resource set reid = #{reid,jdbcType=INTEGER} where rid=#{rid}
+
+        ]]>
+    </update>
+    <delete id="delById">
+    <![CDATA[
+
+         delete from role_resource where id = #{id}
+
+        ]]>
+  </delete>
+    <delete id="delArray">
+        delete from role_resource where id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+    </delete>
+    <delete id="delList">
+        delete from role_resource where id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+    </delete>
+    <delete id="deleteByRoleId">
+        <![CDATA[
+         DELETE FROM role_resource where rid=#{rid}
+        ]]>
+    </delete>
+</mapper>

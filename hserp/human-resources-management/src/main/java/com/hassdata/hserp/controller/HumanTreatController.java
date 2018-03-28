@@ -1,9 +1,11 @@
 package com.hassdata.hserp.controller;
 
 import com.hassdata.hserp.dto.TreatModel;
+import com.hassdata.hserp.po.HumanAddressBook;
 import com.hassdata.hserp.po.HumanDept;
 import com.hassdata.hserp.po.HumanEmp;
 import com.hassdata.hserp.po.HumanTreat;
+import com.hassdata.hserp.service.HumanAddressBookService;
 import com.hassdata.hserp.service.HumanDeptService;
 import com.hassdata.hserp.service.HumanEmpService;
 import com.hassdata.hserp.service.HumanTreatService;
@@ -12,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,6 +35,10 @@ public class HumanTreatController {
     private HumanDeptService humanDeptService;
     @Autowired
     private HumanEmpService humanEmpService;
+    @Autowired
+    private HumanAddressBookService humanAddressBookService;
+
+
     //获取储备人员列表
     @RequestMapping("getTreatList")
     @ResponseBody
@@ -92,6 +97,25 @@ public class HumanTreatController {
         }
         try {
             humanTreatService.update(treat);
+
+            treat = humanTreatService.getOne(treat);
+            //级联更新职员工资
+            HumanEmp emp = new HumanEmp();
+            emp.setId(treat.getEid());
+
+            emp.setSalary(treat.getSalary());
+
+            humanEmpService.update(emp);
+
+            //级联更新通讯录信息
+            HumanAddressBook book = new HumanAddressBook();
+            book.setEid(treat.getId());
+            book = humanAddressBookService.getOne(book);
+            if (book != null){
+                book.setName(treat.getName());
+                humanAddressBookService.update(book);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             return  ServerResponse.createByErrorMessage("修改失败!");

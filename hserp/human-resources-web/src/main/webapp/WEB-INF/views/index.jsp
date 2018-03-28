@@ -3,10 +3,9 @@
 <html lang="zh-CN">
 <head>
     <!-- 引入交互js-->
-
     <meta charset="UTF-8">
     <meta name=”viewport” content=”width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no″>
-    <meta name="Keywords" content="OA"/>
+    <meta name="Keywords" content="IO"/>
     <meta name="description" content="海思数据中心OA管理系统"/>
     <title>海思数据中心OA管理系统</title>
 
@@ -49,7 +48,8 @@
                         </ul>
                     </li>
                     <li class="system-layout-item">
-                        <a href="javascript:;"><img src="static/img/icon/icon-exit.png" alt="" class="system-layout-item-nav-img"> 退出</a>
+                        <a href="javascript:;"><img src="static/img/icon/icon-exit.png" alt=""
+                                                    class="system-layout-item-nav-img"> 退出</a>
                     </li>
                 </ul>
             </div>
@@ -69,56 +69,72 @@
             <div class="side-menu-item">
                 <div class="side-menu-item-title"><span class="side-menu-square"></span>行政管理</div>
                 <ul>
-                    <li><a onclick="createTab({title:'考勤管理',isShowClose:true,url:'http://www.hao123.com'})" href="javascript:;"><i class="iconfont icon-kaoqin"></i>考勤管理</a></li>
-                    <li><a onclick="createTab({title:'报销管理',isShowClose:true,url:'http://www.ifeng.com/'})" href="javascript:;"><i class="iconfont icon-baoxiao"></i>报销管理</a></li>
-                    <li><a onclick="createTab({title:'公章管理',isShowClose:true,url:'http://www.4399.com/'})" href="javascript:;"><i class="iconfont icon-baoxiao"></i>公章管理</a></li>
-                    <li><a onclick="createTab({title:'注册资料管理',isShowClose:true,url:'http://www.cctv.com/'})" href="javascript:;"><i class="iconfont icon-ziliaoguanli"></i>注册资料管理</a></li>
-
-                    <li><a onclick="createTab({title:'会议管理',isShowClose:true,url:'http://www.panda.tv/'})" href="javascript:;"><i class="iconfont icon-huiyi"></i>会议管理</a></li>
+                    <li><a onclick="createTab({title:'考勤管理',isShowClose:true,url:'system/administration/attendanceList'})"
+                           href="javascript:;"><i class="iconfont icon-kaoqin"></i>考勤管理</a></li>
+                    <li><a onclick="createTab({title:'报销管理',isShowClose:true,url:'system/administration/cachetList'})"
+                           href="javascript:;"><i class="iconfont icon-baoxiao"></i>报销管理</a></li>
+                    <li>
+                        <a onclick="createTab({title:'公章管理',isShowClose:true,url:'system/administration/reimbursementList'})"
+                           href="javascript:;"><i class="iconfont icon-baoxiao"></i>公章管理</a></li>
+                    <li><a onclick="createTab({title:'注册资料管理',isShowClose:true,url:'system/administration/meansList'})"
+                           href="javascript:;"><i class="iconfont icon-ziliaoguanli"></i>注册资料管理</a></li>
+                    <li><a onclick="createTab({title:'会议管理',isShowClose:true,url:'system/administration/meetList'})"
+                           href="javascript:;"><i class="iconfont icon-huiyi"></i>会议管理</a></li>
                 </ul>
             </div>
             <div class="side-menu-item">
                 <div class="side-menu-item-title"><span class="side-menu-square"></span>人事管理</div>
                 <ul>
-                    <li><a onclick="createTab({title:'职员管理',isShowClose:true,url:'human/human'})" href="javascript:;"><i class='iconfont icon-34'></i>职员管理</a></li>
-                    <li><a onclick="createTab({title:'部门管理',isShowClose:true,url:'human/dept'})" href="javascript:;"><i class='iconfont icon-yuangongruzhi'></i>部门管理</a></li>
-                    <li><a onclick="createTab({title:'待遇管理',isShowClose:true,url:'treat/treatList'})" href="javascript:;"><i class='iconfont icon-qian'></i>待遇管理</a></li>
-                    <li><a onclick="createTab({title:'通讯录管理',isShowClose:true,url:'mail/mailList'})" href="javascript:;"><i class='iconfont icon-tongxunlu'></i>通讯录管理</a></li>
-                    <li><a onclick="createTab({title:'离职人员管理',isShowClose:true,url:'out/outList'})" href="javascript:;"><i class='iconfont icon-yuangonglizhi'></i>离职人员管理</a></li>
-                    <li><a onclick="createTab({title:'储备人才库管理',isShowClose:true,url:'reserve/reserve'})" href="javascript:;"><i class='iconfont icon-kehu'></i>储备人才库管理</a></li>
+                    <li><a onclick="createTab({title:'职员管理',isShowClose:true,url:'human/human'})" href="javascript:;"><i
+                            class='iconfont icon-34'></i>职员管理</a></li>
+                    <li><a onclick="createTab({title:'部门管理',isShowClose:true,url:'human/dept'})" href="javascript:;"><i
+                            class='iconfont icon-yuangongruzhi'></i>部门管理</a></li>
+                    <li><a onclick="createTab({title:'待遇管理',isShowClose:true,url:'treat/treatList'})"
+                           href="javascript:;"><i class='iconfont icon-qian'></i>待遇管理</a></li>
+                    <li><a onclick="createTab({title:'通讯录管理',isShowClose:true,url:'mail/mailList'})"
+                           href="javascript:;"><i class='iconfont icon-tongxunlu'></i>通讯录管理</a></li>
+                    <li><a onclick="createTab({title:'离职人员管理',isShowClose:true,url:'out/outList'})" href="javascript:;"><i
+                            class='iconfont icon-yuangonglizhi'></i>离职人员管理</a></li>
+                    <li><a onclick="createTab({title:'储备人才库管理',isShowClose:true,url:'reserve/reserve'})"
+                           href="javascript:;"><i class='iconfont icon-kehu'></i>储备人才库管理</a></li>
                 </ul>
             </div>
             <div class="side-menu-item">
                 <div class="side-menu-item-title"><span class="side-menu-square"></span>财务管理</div>
                 <ul>
-                    <li><a onclick="createTab({title:'固定资产管理',isShowClose:true,url:'http://mil.eastday.com/'})" href="javascript:;"><i class='iconfont icon-gudingzichanguanli'></i>固定资产管理</a></li>
-                    <li><a onclick="createTab({title:'资质管理',isShowClose:true,url:'http://mil.eastday.com/'})" href="javascript:;"><i class='iconfont icon-zichan'></i>资质管理</a></li>
+                    <li><a onclick="createTab({title:'固定资产管理',isShowClose:true,url:'http://mil.eastday.com/'})"
+                           href="javascript:;"><i class='iconfont icon-gudingzichanguanli'></i>固定资产管理</a></li>
+                    <li><a onclick="createTab({title:'资质管理',isShowClose:true,url:'http://mil.eastday.com/'})"
+                           href="javascript:;"><i class='iconfont icon-zichan'></i>资质管理</a></li>
 
-                    <li><a onclick="createTab({title:'入账管理',isShowClose:true,url:'http://mil.eastday.com/'})" href="javascript:;"><i class='iconfont icon-ruku'></i>入账管理</a></li>
+                    <li><a onclick="createTab({title:'入账管理',isShowClose:true,url:'http://mil.eastday.com/'})"
+                           href="javascript:;"><i class='iconfont icon-ruku'></i>入账管理</a></li>
 
-                    <li><a onclick="createTab({title:'出账管理',isShowClose:true,url:'http://mil.eastday.com/'})" href="javascript:;"><i class='iconfont icon-chuku'></i>出账管理</a></li>
+                    <li><a onclick="createTab({title:'出账管理',isShowClose:true,url:'http://mil.eastday.com/'})"
+                           href="javascript:;"><i class='iconfont icon-chuku'></i>出账管理</a></li>
                 </ul>
             </div>
             <div class="side-menu-item">
                 <div class="side-menu-item-title"><span class="side-menu-square"></span>项目管理</div>
                 <ul>
-                    <li><a onclick="createTab({title:'客户资源管理',isShowClose:true,url:'http://mil.eastday.com/'})" href="javascript:;"><i class='iconfont icon-kehu'></i>客户资源管理</a></li>
-                    <li><a onclick="createTab({title:'项目进度管理',isShowClose:true,url:'http://mil.eastday.com/'})" href="javascript:;"><i class='iconfont icon-jindu'></i>项目进度管理</a></li>
-                    <li><a onclick="createTab({title:'项目文档管理',isShowClose:true,url:'http://mil.eastday.com/'})" href="javascript:;"><i class='iconfont icon-iconset0118'></i>项目文档管理</a></li>
-                    <li><a onclick="createTab({title:'输出文档管理',isShowClose:true,url:'http://mil.eastday.com/'})" href="javascript:;"><i class='iconfont icon-iconset0118'></i>输出文档管理</a></li>
+                    <li><a onclick="createTab({title:'客户资源管理',isShowClose:true,url:'system/project/getView?viewPage=custom/customer'})" href="javascript:;"><i class='iconfont icon-kehu'></i>客户资源管理</a></li>
+                    <li><a onclick="createTab({title:'项目管理',isShowClose:true,url:'system/project/getView?viewPage=project/project'})" href="javascript:;"><i class='iconfont icon-jindu'></i>项目管理</a></li>
                 </ul>
             </div>
             <div class="side-menu-item">
                 <div class="side-menu-item-title"><span class="side-menu-square"></span>系统设置</div>
                 <ul>
-                    <li><a onclick="createTab({title:'角色管理',isShowClose:true,url:'http://mil.eastday.com/'})" href="javascript:;"><i class='iconfont icon-jiaoseguanli'></i>角色管理</a></li>
-                    <li><a onclick="createTab({title:'账户管理',isShowClose:true,url:'http://mil.eastday.com/'})" href="javascript:;"><i class='iconfont icon-zhanghuguanli'></i>账户管理</a></li>
+                    <li><a onclick="createTab({title:'角色管理',isShowClose:true,url:'http://mil.eastday.com/'})"
+                           href="javascript:;"><i class='iconfont icon-jiaoseguanli'></i>角色管理</a></li>
+                    <li><a onclick="createTab({title:'账户管理',isShowClose:true,url:'http://mil.eastday.com/'})"
+                           href="javascript:;"><i class='iconfont icon-zhanghuguanli'></i>账户管理</a></li>
                 </ul>
             </div>
             <div class="side-menu-item">
                 <div class="side-menu-item-title"><span class="side-menu-square"></span>评估系统</div>
                 <ul>
-                    <li><a onclick="createTab({title:'评估中心',isShowClose:true,url:'performance/evaluation'})" href="javascript:;"><i class="iconfont icon-pingjia"></i>评估中心</a></li>
+                    <li><a onclick="createTab({title:'评估中心',isShowClose:true,url:'performance/evaluation'})"
+                           href="javascript:;"><i class="iconfont icon-pingjia"></i>评估中心</a></li>
 
                 </ul>
             </div>
@@ -128,55 +144,67 @@
         <div class="side-menu-small-items">
             <!-- 小图标菜单项 -->
             <div class="side-menu-small-item">
-                <div data-toast="行政管理" class="side-menu-small-item-icon"><span class="side-menu-small-square" ></span></div>
+                <div data-toast="行政管理" class="side-menu-small-item-icon"><span class="side-menu-small-square"></span>
+                </div>
                 <ul>
-                    <li data-toast="考勤管理"><a href="javascript:;"><i class="iconfont icon-kaoqin"></i></a></li>
-                    <li data-toast="报销管理"><a href="javascript:;"><i class="iconfont icon-baoxiao "></i></a></li>
-                    <li data-toast="公章管理"><a href="javascript:;"><i class="iconfont icon-baoxiao "></i></a></li>
-                    <li data-toast="注册资料管理"><a href="javascript:;"><i class="iconfont icon-ziliaoguanli"></i></a></li>
-                    <li data-toast="会议管理"><a href="javascript:;"><i class="iconfont icon-huiyi"></i></a></li>
+                    <li data-toast="考勤管理"><a onclick="createTab({title:'考勤管理',isShowClose:true,url:'system/administration/attendanceList'})" href="javascript:;"><i class="iconfont icon-kaoqin"></i></a></li>
+                    <li data-toast="报销管理"><a onclick="createTab({title:'报销管理',isShowClose:true,url:'system/administration/cachetList'})" href="javascript:;"><i class="iconfont icon-baoxiao "></i></a></li>
+                    <li data-toast="公章管理"><a onclick="createTab({title:'公章管理',isShowClose:true,url:'system/administration/reimbursementList'})" href="javascript:;"><i class="iconfont icon-baoxiao "></i></a></li>
+                    <li data-toast="注册资料管理"><a onclick="createTab({title:'注册资料管理',isShowClose:true,url:'system/administration/meansList'})" href="javascript:;"><i class="iconfont icon-ziliaoguanli"></i></a></li>
+                    <li data-toast="会议管理"><a onclick="createTab({title:'会议管理',isShowClose:true,url:'system/administration/meetList'})" href="javascript:;"><i class="iconfont icon-huiyi"></i></a></li>
                 </ul>
             </div>
             <div class="side-menu-small-item">
-                <div data-toast="人事管理" class="side-menu-small-item-icon"><span class="side-menu-small-square" ></span></div>
+                <div data-toast="人事管理" class="side-menu-small-item-icon"><span class="side-menu-small-square"></span>
+                </div>
                 <ul>
-                    <li data-toast="职员管理"><a onclick="createTab({title:'职员管理',isShowClose:true,url:'human/human'})" href="javascript:;"><i class='iconfont icon-34'></i></a></li>
-                    <li data-toast="部门管理"><a onclick="createTab({title:'部门管理',isShowClose:true,url:'human/dept'})" href="javascript:;"><i class='iconfont icon-yuangongruzhi'></i></a></li>
-                    <li data-toast="待遇管理"><a onclick="createTab({title:'待遇管理',isShowClose:true,url:'treat/treatList'})" href="javascript:;"><i class='iconfont icon-qian'></i></a></li>
-                    <li data-toast="通讯录管理"><a onclick="createTab({title:'通讯录管理',isShowClose:true,url:'mail/mailList'})" href="javascript:;"><i class='iconfont icon-tongxunlu'></i></a></li>
-                    <li data-toast="离职人员管理"><a onclick="createTab({title:'离职人员管理',isShowClose:true,url:'out/outList'})" href="javascript:;"><i class='iconfont icon-yuangonglizhi'></i></a></li>
-                    <li data-toast="储备人才库管理"><a onclick="createTab({title:'储备人才库管理',isShowClose:true,url:'reserve/reserve'})" href="javascript:;"><i class='iconfont icon-kehu'></i></a></li>
+                    <li data-toast="职员管理"><a onclick="createTab({title:'职员管理',isShowClose:true,url:'human/human'})"
+                                             href="javascript:;"><i class='iconfont icon-34'></i></a></li>
+                    <li data-toast="部门管理"><a onclick="createTab({title:'部门管理',isShowClose:true,url:'human/dept'})"
+                                             href="javascript:;"><i class='iconfont icon-yuangongruzhi'></i></a></li>
+                    <li data-toast="待遇管理"><a onclick="createTab({title:'待遇管理',isShowClose:true,url:'treat/treatList'})"
+                                             href="javascript:;"><i class='iconfont icon-qian'></i></a></li>
+                    <li data-toast="通讯录管理"><a onclick="createTab({title:'通讯录管理',isShowClose:true,url:'mail/mailList'})"
+                                              href="javascript:;"><i class='iconfont icon-tongxunlu'></i></a></li>
+                    <li data-toast="离职人员管理"><a onclick="createTab({title:'离职人员管理',isShowClose:true,url:'out/outList'})"
+                                               href="javascript:;"><i class='iconfont icon-yuangonglizhi'></i></a></li>
+                    <li data-toast="储备人才库管理"><a
+                            onclick="createTab({title:'储备人才库管理',isShowClose:true,url:'reserve/reserve'})"
+                            href="javascript:;"><i class='iconfont icon-kehu'></i></a></li>
                 </ul>
             </div>
             <div class="side-menu-small-item">
-                <div data-toast="财务管理" class="side-menu-small-item-icon"><span class="side-menu-small-square" ></span></div>
+                <div data-toast="财务管理" class="side-menu-small-item-icon"><span class="side-menu-small-square"></span>
+                </div>
                 <ul>
-                    <li data-toast="固定资产管理"><a href="javascript:;"><i class='iconfont icon-gudingzichanguanli'></i></a></li>
+                    <li data-toast="固定资产管理"><a href="javascript:;"><i class='iconfont icon-gudingzichanguanli'></i></a>
+                    </li>
                     <li data-toast="资质管理"><a href="javascript:;"><i class='iconfont icon-zichan'></i></a></li>
                     <li data-toast="入账管理"><a href="javascript:;"><i class='iconfont icon-ruku'></i></a></li>
                     <li data-toast="出账管理"><a href="javascript:;"><i class='iconfont icon-chuku'></i></a></li>
                 </ul>
             </div>
             <div class="side-menu-small-item">
-                <div data-toast="项目管理" class="side-menu-small-item-icon"><span class="side-menu-small-square" ></span></div>
+                <div data-toast="项目管理" class="side-menu-small-item-icon"><span class="side-menu-small-square"></span>
+                </div>
                 <ul>
-                    <li data-toast="客户资源管理"><a href="javascript:;"><i class='iconfont icon-kehu'></i></a></li>
-                    <li data-toast="项目进度管理"><a href="javascript:;"><i class='iconfont icon-jindu'></i></a></li>
-                    <li data-toast="项目文档管理"><a href="javascript:;"><i class='iconfont icon-iconset0118'></i></a></li>
-                    <li data-toast="输出文档管理"><a href="javascript:;"><i class='iconfont icon-iconset0118'></i></a></li>
+                    <li data-toast="客户资源管理"><a onclick="createTab({title:'客户资源管理',isShowClose:true,url:'system/project/getView?viewPage=custom/customer'})" href="javascript:;"><i class='iconfont icon-kehu'></i></a></li>
+                    <li data-toast="项目管理"><a onclick="createTab({title:'项目管理',isShowClose:true,url:'system/project/getView?viewPage=project/project'})" href="javascript:;"><i class='iconfont icon-jindu'></i></a></li>
                 </ul>
             </div>
             <div class="side-menu-small-item">
-                <div data-toast="系统设置" class="side-menu-small-item-icon"><span class="side-menu-small-square"></span></div>
+                <div data-toast="系统设置" class="side-menu-small-item-icon"><span class="side-menu-small-square"></span>
+                </div>
                 <ul>
                     <li data-toast="角色管理"><a href="javascript:;"><i class='iconfont icon-jiaoseguanli'></i></a></li>
                     <li data-toast="账户管理"><a href="javascript:;"><i class='iconfont icon-zhanghuguanli'></i></a></li>
                 </ul>
             </div>
             <div class="side-menu-small-item">
-                <div data-toast="评估系统" class="side-menu-small-item-icon"><span class="side-menu-small-square"></span></div>
+                <div data-toast="评估系统" class="side-menu-small-item-icon"><span class="side-menu-small-square"></span>
+                </div>
                 <ul>
-                    <li data-toast="评估中心"><a href="javascript:;"><i class="iconfont icon-pingjia"></i></a></li>
+                    <li data-toast="评估中心"><a onclick="createTab({title:'评估中心',isShowClose:true,url:'performance/evaluation'})" href="javascript:;"><i class="iconfont icon-pingjia"></i></a></li>
                 </ul>
             </div>
         </div>

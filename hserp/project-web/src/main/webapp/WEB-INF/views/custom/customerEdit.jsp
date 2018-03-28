@@ -13,152 +13,147 @@
 
 </head>
 <body>
-<div class='humanEdit mt'>
+<div class='mt'>
 
-    <form class="layui-form" id="humanEdit">
+    <form class="layui-form" id="customerEdit">
 
         <div class="layui-form-item" >
-            <label class="layui-form-label">姓名:</label>
+            <label class="layui-form-label">公司名称:</label>
             <div class="layui-input-inline">
-                <input type="text" placeholder="请输入姓名" name="name" class="layui-input" required lay-verify="required" autocomplete="off" >
+                <input type="text" placeholder="请输入公司名称" name="company" class="layui-input" required lay-verify="required" autocomplete="off" >
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">性别:</label>
+            <label class="layui-form-label">公司规模:</label>
             <div class="layui-input-inline">
-                <input type="radio" name="sex" value="true" title="男" id="man">
-                <input type="radio" name="sex" value="false" title="女" id="woman">
+                <input type="radio" name="size" value="0" title="初创公司" id="first">
+                <input type="radio" name="size" value="1" title="稳定发展" id="second">
+                <input type="radio" name="size" value="2" title="大型公司" id="thred">
+                <input type="radio" name="size" value="3" title="上市公司" id="four">
+            </div>
+        </div>
+        <div class="layui-form-item" >
+            <label class="layui-form-label">公司负责人:</label>
+            <div class="layui-input-inline">
+                <input type="text" placeholder="请输入公司负责人" name="responsiblePerson" class="layui-input" required lay-verify="required" autocomplete="off" >
+            </div>
+        </div>
+        <div class="layui-form-item" >
+            <label class="layui-form-label">公司领导:</label>
+            <div class="layui-input-inline">
+                <input type="text" placeholder="请输入公司领导" name="lead" class="layui-input" required lay-verify="required" autocomplete="off" >
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">身份证号:</label>
+            <label class="layui-form-label">客户状态:</label>
             <div class="layui-input-inline">
-                <input type="text"  placeholder="请输入身份证号" name="idCard" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
+                <input type="radio" name="status" value="0" title="正常     " id="normal">
+                <input type="radio" name="status" value="1" title="删除     " id="del">
+                <input type="radio" name="status" value="2" title="锁定     " id="lock">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">手机号码:</label>
+            <label class="layui-form-label">公司电话:</label>
             <div class="layui-input-inline">
-                <input type="tel" name="tel" placeholder="请输入手机号码" lay-verify="required|phone" autocomplete="off" class="layui-input">
+                <input type="tel" name="companyTel" placeholder="请输入公司电话" lay-verify="required|phone" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">公司邮箱:</label>
+            <div class="layui-input-inline">
+                <input type="tel" name="companyEamil" placeholder="请输入公司邮箱" lay-verify="email" autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">学历:</label>
+            <label class="layui-form-label">公司联系人电话:</label>
             <div class="layui-input-inline">
-                <input type="text" placeholder="请输入学历" name="education" class="layui-input" required lay-verify="required" autocomplete="off" >
+                <input type="tel" name="responsibleTel" placeholder="请输入公司联系人电话" lay-verify="required|phone" autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">职员所属部门:</label>
-            <div  class="layui-input-block" style="z-index: 99;">
-                <select name="deptId" id="dept"></select>
+            <label class="layui-form-label">公司成立时间:</label>
+            <div class="layui-input-inline">
+                <input type="text" placeholder="请选择公司成立时间" name="companyTime" class="layui-input" id="date" lay-verify="date"  autocomplete="off">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">工资:</label>
+            <label class="layui-form-label">联系人生日:</label>
             <div class="layui-input-inline">
-                <input type="text" placeholder="请输入工资" name="salary" class="layui-input" required lay-verify="required" autocomplete="off" >
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">实习时间:</label>
-            <div class="layui-input-inline">
-                <input type="text" placeholder="请选择实习时间" name="practiceTime" class="layui-input" id="date" lay-verify="date"  autocomplete="off">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">转正时间:</label>
-            <div class="layui-input-inline">
-                <input type="text" placeholder="请选择转正时间" name="regulTime" class="layui-input" id="date1" lay-verify="date"  autocomplete="off">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">是否离职:</label>
-            <div class="layui-input-inline">
-                <input type="radio" name="status" value="0" title="是" id="status">
-                <input type="radio" name="status" value="1" title="否" id="fals">
+                <input type="text" placeholder="请选择联系人生日" name="responsibleBirthday" class="layui-input" id="date1" lay-verify="date"  autocomplete="off">
             </div>
         </div>
 
         <div class="layui-form-item">
             <div class="layui-input-inline sub" style="margin-left: 150px;">
-                <button class="layui-btn" lay-submit="" lay-filter="humanEdit">立即提交</button>
+                <button class="layui-btn" lay-submit="" lay-filter="customerEdit">立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
     </form>
 </div>
 <script>
-
-    $.post('system/human/api/getDeptList', {},
-        function(result) {
-            if (result.code == 0) {
-                var html = '<option value="">请选择部门</option>';
-                $(result.data).each(
-                    function(i, item) {
-                        html += '<option value="' + item.id + '">' + item.name + '</option>';
-                    });
-                $("#dept").html(html);
-            } else {
-                console.log(result.msg);
-            }
-        });
-</script>
-<script>
     var layer = null;
-    layui.use(['form', 'layer'], function () {
-        var form = layui.form;
-        layer = layui.layer;
+    var id='${ki}';
+    layui.use(['form', 'layer', 'laydate'], function () {
+        var form = layui.form,
+            laydate = layui.laydate;
+            layer = layui.layer;
 
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
 
-        $.get('system/human/api/getEmpById',{ "id" : window.parent.humanId },function (result) {
-
+        $.get('system/project/api/getCustomResourceById',{ "id" : window.parent.customerId },function (result) {
             if(result.code == 0){
-                $("input[name=name]").val(result.data.name);
-                $("input[name=idCard]").val(result.data.idCard);
-                $("input[name=tel]").val(result.data.tel);
-                $("input[name=education]").val(result.data.education);
-                $("select[name=deptId]").val(result.data.id);
-                $("input[name=salary]").val(result.data.salary);
-                $("input[name=practiceTime]").val(result.data.practiceTime);
-                $("input[name=regulTime]").val(result.data.regulTime);
+                $("input[name=company]").val(result.data.company);
+                $("input[name=responsiblePerson]").val(result.data.responsiblePerson);
+                $("input[name=lead]").val(result.data.lead);
+                $("input[name=companyTel]").val(result.data.companyTel);
+                $("input[name=companyEamil]").val(result.data.companyEamil);
+                $("input[name=companyTime]").val(result.data.companyTime);
+                $("input[name=responsibleTel]").val(result.data.responsibleTel);
+                $("input[name=responsibleBirthday]").val(result.data.responsibleBirthday);
                 console.log(result.data.id);
 
-
-                if (result.data.sex == "男") {
-                    $("#man").prop("checked", true);
-                } else {
-                    $("#woman").prop("checked", true);
+                if ( result.data.size == 0 ) {
+                    $("#first").prop("checked", true);
+                } else if( result.data.size == 1 ){
+                    $("#second").prop("checked", true);
+                }else if( result.data.size == 2 ){
+                    $("#thred").prop("checked", true);
+                } else if( result.data.size == 3 ){
+                    $("#four").prop("checked", true);
                 }
 
-                if (result.data.status == 1) {
-                    $("#status").prop("checked", true);
-                } else {
-                    $("#fals").prop("checked", true);
+                if (result.data.status == 0) {
+                    $("#normal").prop("checked", true);
+                } else if (result.data.status == 1){
+                    $("#del").prop("checked", true);
+                }else if (result.data.status == 2){
+                    $("#lock").prop("checked", true);
                 }
-
                 form.render();
-
             }else {
                 console.log(result.msg);
             }
         });
 
-        form.on('submit(humanEdit)', function (data) {
+        form.on('submit(customerEdit)', function (data) {
             var loadIndex = layer.load();
-            var fromData = new FormData($("#humanEdit")[0]);
-            fromData.append("id",window.parent.humanId);
+            var fromData = new FormData($("#customerEdit")[0]);
+            fromData.append("id",window.parent.customerId);
             $.ajax({
                 type: "POST",
                 dataType: "json",
-                url: 'system/human/api/updateEmp',
+                url: 'system/project/api/updateCustomResource',
                 data: fromData,
                 async: false,
                 cache: false,

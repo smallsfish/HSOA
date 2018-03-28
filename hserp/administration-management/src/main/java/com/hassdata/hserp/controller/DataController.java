@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -80,47 +81,71 @@ public class DataController {
 
     /*修改*/
     @RequestMapping(value = "dataSave", method = RequestMethod.POST)
-    public ServerResponse dataSave(AdministrativeData administrativeData, HttpServletRequest request, MultipartFile file){
-        if (file == null){
-            return ServerResponse.createByErrorMessage("文件不能为空");
-        }
+    public ServerResponse dataSave(AdministrativeData administrativeData, MultipartHttpServletRequest request, MultipartFile file){
         try {
-            if (FileUploadUtils.processUpload(request,"/File/doc",3, file, FileUploadType.getDocType())) {
-                String path = request.getAttribute("newName").toString();
-                AdministrativeData data = new AdministrativeData();
-                data.setAnnex(path);
-                data.setText(administrativeData.getText());
-                data.setTime(df.format(new Date()));
-
-                dataService.update(data);
-            }
+            //if (FileUploadUtils.processUpload(request,"/static/File/doc",3, file, FileUploadType.getDocType())) {
+            //String path = request.getAttribute("newName").toString();
+            AdministrativeData data = new AdministrativeData();
+            //data.setAnnex(path);
+            data.setId(administrativeData.getId());
+            data.setText(administrativeData.getText());
+            data.setTime(df.format(new Date()));
+            dataService.update(data);
+            /*}else {
+                return ServerResponse.createBySuccess("添加失败,上传文件格式错误，请上传.doc .docx .word .wps 格式的文件");
+            }*/
         } catch (Exception e) {
             e.printStackTrace();
-            return ServerResponse.createBySuccess("修改失败!", "上传文件格式错误，请上传.doc .docx .word .wps 格式的文件");
+            return ServerResponse.createBySuccess("添加失败");
         }
         return ServerResponse.createBySuccessMessage("修改成功!");
     }
 
-    /*添加*/
-    @RequestMapping(value = "dataAdd", method = RequestMethod.POST)
-    public ServerResponse dataAdd(AdministrativeData administrativeData, HttpServletRequest request, MultipartFile file){
+    //文件上传
+    @RequestMapping(value = "dataUpdateFile",method = RequestMethod.POST)
+    public ServerResponse dataUpdateFile(MultipartHttpServletRequest request, MultipartFile file){
         if (file == null){
             return ServerResponse.createByErrorMessage("文件不能为空");
         }
-
         try {
-            if (FileUploadUtils.processUpload(request,"/File/doc",3, file, FileUploadType.getDocType())){
+            if (FileUploadUtils.processUpload(request,"/static/File/doc",3, file, FileUploadType.getDocType())){
+                String path = request.getAttribute("newName").toString();
+                AdministrativeData data = new AdministrativeData();
+                data.setAnnex(path);
+                data.setTime(df.format(new Date()));
+                dataService.update(data);
+            }else {
+                return ServerResponse.createBySuccess("添加失败,上传文件格式错误，请上传.doc .docx .word .wps 格式的文件");
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ServerResponse.createBySuccess("添加失败,上传文件格式错误，请上传.doc .docx .word .wps 格式的文件");
+        }
+        return ServerResponse.createBySuccessMessage("新增成功!");
+    }
+
+    /*添加*/
+    @RequestMapping(value = "dataAdd", method = RequestMethod.POST)
+    public ServerResponse dataAdd(AdministrativeData administrativeData, MultipartHttpServletRequest request, MultipartFile file){
+        if (file == null){
+            return ServerResponse.createByErrorMessage("文件不能为空");
+        }
+        try {
+            if (FileUploadUtils.processUpload(request,"/static/File/doc",3, file, FileUploadType.getDocType())){
                 String path = request.getAttribute("newName").toString();
                 AdministrativeData data = new AdministrativeData();
                 data.setAnnex(path);
                 data.setText(administrativeData.getText());
                 data.setTime(df.format(new Date()));
                 dataService.save(data);
+            }else{
+                return ServerResponse.createBySuccess("添加失败,上传文件格式错误，请上传.doc .docx .word .wps 格式的文件");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return ServerResponse.createBySuccess("添加失败", "上传文件格式错误，请上传.doc .docx .word .wps 格式的文件");
+            return ServerResponse.createBySuccess("添加失败,上传文件格式错误，请上传.doc .docx .word .wps 格式的文件");
         }
         return ServerResponse.createBySuccessMessage("新增成功!");
     }
+
 }

@@ -21,7 +21,7 @@ public interface BaseService<T> {
      * 查询记录集合
      * @return
      */
-    List<?> list(T t, String orderBy);
+    List<T> list(T t, String orderBy);
 
     /**
      * 分页查询
@@ -69,7 +69,7 @@ public interface BaseService<T> {
      * @param list
      * @return
      */
-    int delList(List<?> list);
+    int delList(List<T> list);
 
     /**
      * 批量删除方法

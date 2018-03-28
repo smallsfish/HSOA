@@ -24,13 +24,13 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">性别:</label>
-            <div class="layui-input-inline">
-                <input type="radio" name="sex" value="true" title="男" id="man">
-                <input type="radio" name="sex" value="false" title="女" id="woman">
-            </div>
-        </div>
+        <%--<div class="layui-form-item">--%>
+            <%--<label class="layui-form-label">性别:</label>--%>
+            <%--<div class="layui-input-inline">--%>
+                <%--<input type="radio" name="sex" value="true" title="男" id="man">--%>
+                <%--<input type="radio" name="sex" value="false" title="女" id="woman">--%>
+            <%--</div>--%>
+        <%--</div>--%>
 
 
         <div class="layui-form-item">
@@ -120,7 +120,7 @@
                 },
                 error: function (data) {
                     layer.close(loadIndex);
-                    layer.alert("出现异常！");
+                    layer.msg("出现异常！");
                 }
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。

@@ -48,7 +48,7 @@ public interface BaseDao<T> {
      * 批量保存
      * @param list
      */
-    int batchSave(List<?> list);
+    int batchSave(List<T> list);
 
     /**
      * 通用的修改方法
@@ -60,7 +60,7 @@ public interface BaseDao<T> {
      * @param list
      * @return
      */
-    int batchUpdate(List<?> list);
+    int batchUpdate(List<T> list);
 
     /**
      * 删除方法
@@ -73,7 +73,7 @@ public interface BaseDao<T> {
      * @param list
      * @return
      */
-    int delList(List<?> list);
+    int delList(List<T> list);
 
     /**
      * 批量删除方法

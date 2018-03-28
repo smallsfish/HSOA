@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hassdata.hserp.dao.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.hassdata.hserp.po.Role">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="rolename" jdbcType="VARCHAR" property="rolename"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="available" jdbcType="BIT" property="available"/>
+    </resultMap>
+    <sql id="roleColumns">
+    <![CDATA[
+
+         id,rolename,description,available
+
+        ]]>
+  </sql>
+    <sql id="roleDynamicWhere">
+        <where>
+            <if test="null != id and '' !=  id">and id = #{ id}</if>
+            <if test="null != rolename and '' !=  rolename">and rolename = #{ rolename}</if>
+            <if test="null != description and '' !=  description">and description = #{ description}</if>
+            <if test="null != available and '' !=  available">and available = #{ available}</if>
+        </where>
+    </sql>
+    <sql id="roleDynamicLikeWhere">
+        <where>
+            <if test="null != id and '' !=  id">and id LIKE #{ id}</if>
+            <if test="null != rolename and '' !=  rolename">and rolename LIKE #{ rolename}</if>
+            <if test="null != description and '' !=  description">and description LIKE #{ description}</if>
+            <if test="null != available and '' !=  available">and available LIKE #{ available}</if>
+        </where>
+    </sql>
+    <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="roleColumns"/>
+        from role where id = #{id}
+    </select>
+    <select id="getOne" parameterType="com.hassdata.hserp.po.Role" resultMap="BaseResultMap">
+        select
+        <include refid="roleColumns"/>
+        from role
+        <include refid="roleDynamicWhere"/>
+        limit 0 , 1
+    </select>
+    <select id="list" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="roleColumns"/>
+        from role
+        <include refid="roleDynamicWhere"/>
+        <if test="orderBy != null and orderBy != ''">
+            order by ${orderBy}
+        </if>
+    </select>
+    <select id="listPage" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="roleColumns"/>
+        from role
+        <include refid="roleDynamicWhere"/>
+        <if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+    </select>
+    <select id="listLikePage" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="roleColumns"/>
+        from role
+        <include refid="roleDynamicLikeWhere"/>
+        <if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+    </select>
+    <select id="countLike" parameterType="com.hassdata.hserp.po.Role" resultType="java.lang.Long">
+        select count(1) from role
+        <include refid="roleDynamicLikeWhere"/>
+    </select>
+    <select id="count" parameterType="com.hassdata.hserp.po.Role" resultType="java.lang.Long">
+        select count(1) from role
+        <include refid="roleDynamicWhere"/>
+    </select>
+    <select id="getIdMax" resultType="int">
+        SELECT max(Auto_increment) FROM information_schema.tables  WHERE table_name='role'
+    </select>
+    <sql id="save_role_columns">
+    insert into role(
+		rolename ,description ,available
+	) values
+  </sql>
+    <sql id="save_role_values">
+    (
+	  #{ rolename,jdbcType=VARCHAR},
+	  #{ description,jdbcType=VARCHAR},
+	  #{ available,jdbcType=BIT}
+	)
+  </sql>
+    <insert id="save" keyProperty="id" parameterType="com.hassdata.hserp.po.Role" useGeneratedKeys="true">
+        <include refid="save_role_columns"/>
+        <include refid="save_role_values"/>
+    </insert>
+    <insert id="batchSave" parameterType="list">
+        <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+            <include refid="save_role_columns"/>
+            <include refid="save_role_values"/>
+        </foreach>
+    </insert>
+    <sql id="roleUpdate">
+        update role
+        <set>
+            <if test="null != rolename">rolename = #{ rolename,jdbcType=VARCHAR},</if>
+            <if test="null != description">description = #{ description,jdbcType=VARCHAR},</if>
+            <if test="null != available">available = #{ available,jdbcType=BIT}</if>
+        </set>
+        where id = #{id}
+    </sql>
+    <update id="update" parameterType="com.hassdata.hserp.po.Role">
+        <include refid="roleUpdate"/>
+    </update>
+    <update id="batchUpdate" parameterType="list">
+        <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+            <include refid="roleUpdate"/>
+        </foreach>
+    </update>
+    <delete id="delById">
+    <![CDATA[
+
+         delete from role where id = #{id}
+
+        ]]>
+  </delete>
+    <delete id="delArray">
+        delete from role where id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+    </delete>
+    <delete id="delList">
+        delete from role where id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+    </delete>
+</mapper>

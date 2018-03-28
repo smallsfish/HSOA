@@ -34,7 +34,7 @@
 
 
 <script>
-    var humanId=null;
+    var customerId = null;
     var searchTable;
 
     layui.use('table', function(){
@@ -50,20 +50,18 @@
 
             searchTable = table.render({
             elem: '#test'
-            ,url:'system/human/api/getEmpList'
-            ,height: 'full-128'
+            ,url:'system/project/api/getCustomResourceList'
+            ,height: 'full-78'
             ,cols: [[
-                {field:'id', width: 66, title: '序号', align: 'center'}
-                ,{field:'name', width: 120, title: '姓名', align: 'center'}
-                ,{field:'sex', width: 66, title: '性别', align: 'center'}
-                ,{field:'idCard', width: 200, title: '身份证号', align: 'center'}
-                ,{field:'tel', title: '手机号', width: twidth * 0.2, align: 'center'}
-                ,{field:'education', width: twidth*0.1, title: '学历', sort: true, align: 'center'}
-                ,{field:'deptName', width: twidth*0.1, title: '所属部门', sort: true, align: 'center'}
-                ,{field:'salary', width: twidth*0.1, title: '工资待遇', sort: true, align: 'center'}
-                ,{field:'practiceTime', width: twidth*0.1, title: '实习时间', sort: true, align: 'center'}
-                ,{field:'regulTime', width: twidth*0.1, title: '转正时间', sort: true, align: 'center'}
-                ,{field:'status', width: twidth*0.1, title: '是否离职', sort: true, align: 'center'}
+                {field:'orderNumber', width: 66, title: '序号', align: 'center', sort:true}
+                ,{field:'company', width: twidth * 0.18, title: '公司名称', align: 'center'}
+                ,{field:'size', width: twidth * 0.18, title: '公司规模',templet:'#companySize', align: 'center'}
+                ,{field:'lead', width: twidth * 0.18, title: '公司领导', align: 'center'}
+                ,{field:'responsiblePerson', width: twidth * 0.18, title: '公司负责人', align: 'center'}
+                ,{field:'companyTel', width: twidth * 0.18, title: '公司电话', align: 'center'}
+                ,{field:'companyEamil', width: twidth * 0.18, title: '公司email', align: 'center'}
+                ,{field:'companyTime', width: 120, title: '公司成立时间', align: 'center'}
+                ,{field:'status', width: 120, title: '客户状态',templet:'#companyStatus',  align: 'center'}
                 ,{
                     width: twidth * 0.18,
                     fixed: 'right',
@@ -89,28 +87,28 @@
                         $.ajax({
                             type: "GET",
                             dataType: "json",
-                            url: 'system/human/api/deleteEmp',
+                            url: 'system/project/api/delCustomResource',
                             data: {'id': data.id},
                             success: function (result) {
                                 layer.close(loadIndex);
                                 if (result.status == 0) {
-                                    obj.del();
-                                    layer.alert("删除成功！");
+                                    layer.msg("删除成功！");
+                                    refreach();
                                 }else if(result.status==1){
-                                    layer.alert("删除失败！");
+                                    layer.msg("删除失败！");
                                 }else if(result.status==2){
-                                    layer.alert("请求参数异常！");
+                                    layer.msg("请求参数异常！");
                                 }else if(result.status==10){
-                                    layer.alert("请重新登录。。。");
+                                    layer.msg("请重新登录。。。");
                                     window.location.href="system/login";
                                 }else if(result.status==20){
-                                    layer.alert("你没有操作权限！");
+                                    layer.msg("你没有操作权限！");
                                 }
 
                             },
                             error: function (data) {
                                 layer.close(loadIndex);
-                                layer.alert("出现异常！请刷新页面重试");
+                                layer.msg("出现异常！请刷新页面重试");
                             }
                         });
                     });
@@ -129,7 +127,7 @@
         var userName = $(":input[name='name']").val();
 
         searchTable.reload({
-            url: 'system/human/api/getEmpList?name=' + userName
+            url: 'system/project/api/getCustomResourceListByLike?company=' + userName
         });
     }
 
@@ -137,12 +135,12 @@
     function editorUser(data) {
         layui.use('layer', function () {
             var layer = layui.layer;
-            humanId=data.id;
+            customerId=data.id;
             layer.open({
-                title: data.name + ' 用户编辑',
+                title: '客户资源编辑',
                 type: 2,
                 area: ['50%', '70%'],
-                content: 'system/project/getView?viewPage=project/customerEdit?id=' + data.id,
+                content: 'system/project/getView?viewPage=custom/customerEdit&ki=' + data.id,
             });
         });
     }
@@ -156,7 +154,7 @@
                 title: data.name + '项目详情',
                 type: 2,
                 area: ['50%', '70%'],
-                content: 'system/project/getView?viewPage=project/customerDetail?id=' + data.id,
+                content: 'system/project/getView?viewPage=custom/customerDetail&ki=' + data.id,
             });
         });
     }
@@ -168,34 +166,23 @@
                 title: '添加项目信息',
                 type: 2,
                 area: ['50%', '70%'],
-                content: 'system/project/getView?viewPage=project/customerAdd'
+                content: 'system/project/getView?viewPage=custom/customerAdd'
             });
         });
     }
 
-    function manager() {
-        layui.use('layer', function () {
-            var layer = layui.layer;
-            layer.open({
-                title: '项目管理',
-                type: 2,
-                area: ['70%', '90%'],
-                content: 'system/project/getView?viewPage=project/customerAdd'
-            });
-        });
+    function manager(data) {
+        window.parent.createTab({title: data.company+'管理',isShowClose:true,url:'system/project/getView?viewPage=custom/customerManage&ki='+data.id});
     }
-
     function refreach() {
-
-            searchTable.reload({
-                url:'system/human/api/getEmpList'
-            });
-
+        searchTable.reload({
+            url:'system/project/api/getCustomResourceList'
+        });
     }
 
 </script>
 <script type="text/html" id="infoToolBar">
-    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="detail">详情</a>
+    <%--<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="detail">详情</a>--%>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="manager">管理</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
@@ -204,6 +191,27 @@
     {{#  if(d.auth > 2){ }}
     <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>
     {{#  } }}
+</script>
+<script type="text/html" id="companySize">
+    {{# if(d.size === 0){ }}
+    初创公司
+    {{# }else if(d.size === 1){ }}
+    稳定发展
+    {{# }else if(d.size === 2){ }}
+    大型公司
+    {{# }else if(d.size === 3){ }}
+    上市公司
+    {{# } }}
+</script>
+
+<script type="text/html" id="companyStatus">
+    {{# if(d.status === 0){ }}
+    正常
+    {{# }else if(d.status === 1){ }}
+    删除
+    {{# }else if(d.status === 2){ }}
+    锁定
+    {{# } }}
 </script>
 
 </body>

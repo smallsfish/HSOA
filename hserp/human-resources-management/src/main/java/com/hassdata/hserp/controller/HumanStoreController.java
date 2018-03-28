@@ -1,16 +1,14 @@
 package com.hassdata.hserp.controller;
 
 import com.hassdata.hserp.dto.StoreModel;
-import com.hassdata.hserp.po.HumanDept;
-import com.hassdata.hserp.po.HumanEmp;
-import com.hassdata.hserp.po.HumanOutEmp;
-import com.hassdata.hserp.po.HumanStore;
+import com.hassdata.hserp.po.*;
 import com.hassdata.hserp.service.HumanDeptService;
 import com.hassdata.hserp.service.HumanEmpService;
 import com.hassdata.hserp.service.HumanOutEmpService;
 import com.hassdata.hserp.service.HumanStoreService;
 import com.hassdata.hserp.utils.DateUtils;
 import com.hassdata.hserp.utils.ServerResponse;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -55,7 +53,8 @@ public class HumanStoreController {
             if (!StringUtils.isEmpty(store.getName())) {
                 store.setName("%" + store.getName() + "%");
             }
-            List<HumanDept> humanDepts = (List<HumanDept>)humanDeptService.list(null, null);
+            List<HumanDept> humanDepts = humanDeptService.list(null, null);
+            store.setStatus(0);//只显示实习员工
             humanStores = humanStoreService.listLikePage(store, "id ASC", fromIndex, pageSize);
             if (humanStores.size() > 0){
                 Integer index = 0;
@@ -66,7 +65,7 @@ public class HumanStoreController {
                 }
             }
 
-            count = humanStoreService.count(store);
+            count = humanStoreService.countLike(store);
         } catch (Exception e) {
             e.printStackTrace();
             return  ServerResponse.createByErrorMessage("系统异常!");
@@ -131,12 +130,12 @@ public class HumanStoreController {
     @RequestMapping("addStore")
     @ResponseBody
     public ServerResponse addStore(HumanStore store, HttpServletRequest request){
-        if (store.getName() == null || store.getSex()==null || store.getDeptId() == null || store.getIdCard() == null || store.getSalary() == null || store.getTel() == null || store.getPracticeTime() == null){
+        if (store.getName() == null || store.getSex() == null || store.getDeptId() == null || store.getIdCard() == null || store.getSalary() == null || store.getTel() == null || store.getPracticeTime() == null){
             return  ServerResponse.createByErrorMessage("必须参数为空!");
         }
         try {
             //获取创建人ID
-            request.getSession().getAttribute("user");
+            AdminUser adminUser = (AdminUser)SecurityUtils.getSubject().getSession(true).getAttribute("CurrentAdminUser");
             ////////////////////////////
             ////////////////////////////
             ///////////////////////////
@@ -148,6 +147,9 @@ public class HumanStoreController {
             hoe = humanOutEmpService.getOne(hoe);
             if (hoe != null){
                 return ServerResponse.createByErrorMessage("身份证号已存在!");
+            }
+            if (adminUser != null && adminUser.getId() != null){
+                store.setCreateBy(adminUser.getId());
             }
             humanStoreService.save(store);
         } catch (Exception e) {

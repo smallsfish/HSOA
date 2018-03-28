@@ -34,6 +34,7 @@ public class ProjectProgressController {
         return ServerResponse.createBySuccessMessage("修改成功");
     }
 
+
     @RequestMapping(value = "delProjectProgress",method = RequestMethod.GET)
     public ServerResponse delProjectProgress(Integer id){
         projectProgressService.delById(id);
@@ -41,10 +42,15 @@ public class ProjectProgressController {
     }
 
     @RequestMapping(value = "getProjectProgressList",method = RequestMethod.GET)
-    public ServerResponse getProjectProgressList(@RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "30") Integer limit){
-        long count=projectProgressService.count(null);
-        List<ProjectProgress> projectProgressList=projectProgressService.listPage(null,"id DESC",page,limit);
+    public ServerResponse getProjectProgressList(ProjectProgress projectProgress,@RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "30") Integer limit){
+        long count=projectProgressService.count(projectProgress);
+        List<ProjectProgress> projectProgressList=projectProgressService.listPage(projectProgress,"id DESC",page,limit);
         return ServerResponse.createBySuccessForLayuiTable("查找成功",projectProgressList,count);
+    }
+    @RequestMapping(value = "getProjectProgressById",method = RequestMethod.GET)
+    public ServerResponse getProjectProgressList(ProjectProgress projectProgressram){
+        ProjectProgress pp=projectProgressService.getOne(projectProgressram);
+        return ServerResponse.createBySuccess("查找成功",pp);
     }
 
     @RequestMapping(value = "getProjectProgressListByLike",method = RequestMethod.GET)

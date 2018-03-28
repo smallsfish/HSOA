@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hassdata.hserp.dao.AdminRoleMapper">
+  <resultMap id="BaseResultMap" type="com.hassdata.hserp.po.AdminRole">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="aid" jdbcType="INTEGER" property="aid" />
+    <result column="rid" jdbcType="INTEGER" property="rid" />
+  </resultMap>
+  <sql id="admin_roleColumns">
+    <![CDATA[ id,aid,rid ]]>
+  </sql>
+  <sql id="admin_roleDynamicWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id = #{ id}</if>
+      <if test="null != aid and '' !=  aid">and aid = #{ aid}</if>
+      <if test="null != rid and '' !=  rid">and rid = #{ rid}</if>
+	</where>
+  </sql>
+  <sql id="admin_roleDynamicLikeWhere">
+    <where>
+      <if test="null != id and '' !=  id">and id LIKE #{ id}</if>
+      <if test="null != aid and '' !=  aid">and aid LIKE #{ aid}</if>
+      <if test="null != rid and '' !=  rid">and rid LIKE #{ rid}</if>
+	</where>
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="admin_roleColumns" /> from  admin_role where id = #{id}
+  </select>
+  <select id="getOne" parameterType="com.hassdata.hserp.po.AdminRole" resultMap="BaseResultMap">
+    select <include refid="admin_roleColumns" /> from  admin_role <include refid="admin_roleDynamicWhere" /> limit 0 , 1
+  </select>
+  <select id="list" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="admin_roleColumns" /> from  admin_role <include refid="admin_roleDynamicWhere" />
+	<if test="orderBy != null and orderBy != ''">
+          order by ${orderBy}
+      </if>
+  </select>
+  <select id="listPage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="admin_roleColumns" /> from  admin_role <include refid="admin_roleDynamicWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="listLikePage" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="admin_roleColumns" /> from  admin_role <include refid="admin_roleDynamicLikeWhere" />
+	<if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+        <if test="fromIndex != null and fromIndex > -1 and pageSize != null and pageSize > 0">
+            limit #{fromIndex},#{pageSize}
+        </if>
+  </select>
+  <select id="countLike" parameterType="com.hassdata.hserp.po.AdminRole" resultType="java.lang.Long">
+    select count(1) from admin_role <include refid="admin_roleDynamicLikeWhere" />
+  </select>
+  <select id="count" parameterType="com.hassdata.hserp.po.AdminRole" resultType="java.lang.Long">
+    select count(1) from admin_role <include refid="admin_roleDynamicWhere" />
+  </select>
+  <sql id="save_admin_role_columns">
+    insert into admin_role(
+		aid ,rid
+	) values
+  </sql>
+  <sql id="save_admin_role_values">
+    (
+	  #{ aid,jdbcType=INTEGER},
+	  #{ rid,jdbcType=INTEGER}
+	)
+  </sql>
+  <insert id="save" keyProperty="id" parameterType="com.hassdata.hserp.po.AdminRole" useGeneratedKeys="true">
+    <include refid="save_admin_role_columns" /><include refid="save_admin_role_values" />
+  </insert>
+  <insert id="batchSave" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="save_admin_role_columns" /><include refid="save_admin_role_values" />
+	</foreach>
+  </insert>
+  <sql id="admin_roleUpdate">
+    update admin_role 
+	<set> 
+      <if test="null != aid">aid = #{ aid,jdbcType=INTEGER},</if>
+      <if test="null != rid">rid = #{ rid,jdbcType=INTEGER}</if>
+	</set>
+	where id = #{id}
+  </sql>
+  <update id="update" parameterType="com.hassdata.hserp.po.AdminRole">
+    <include refid="admin_roleUpdate" />
+  </update>
+  <update id="batchUpdate" parameterType="list">
+    <foreach collection="list" index="index" item="item" open="" separator=";" close="">
+	  <include refid="admin_roleUpdate" />
+	</foreach>
+  </update>
+  <update id="updateAdminRoleByAid" parameterType="com.hassdata.hserp.po.RoleResource">
+    UPDATE admin_role set rid=#{rid} where aid=#{aid};
+  </update>
+  <delete id="delById">
+    <![CDATA[ delete from admin_role where id = #{id} ]]>
+  </delete>
+  <delete id="delArray">
+    delete from admin_role where id in
+	<foreach collection="array" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="delList">
+    delete from admin_role where id in
+	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <delete id="deleteAdminRoleByAid" parameterType="java.lang.Integer">
+    <![CDATA[
+	        delete from admin_role where
+	        aid = #{aid}
+	    ]]>
+  </delete>
+</mapper>

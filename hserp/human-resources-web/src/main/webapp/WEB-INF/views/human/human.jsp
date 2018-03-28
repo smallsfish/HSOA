@@ -63,7 +63,7 @@
                 ,{field:'salary', width: twidth*0.1, title: '工资待遇', sort: true, align: 'center'}
                 ,{field:'practiceTime', width: twidth*0.1, title: '实习时间', sort: true, align: 'center'}
                 ,{field:'regulTime', width: twidth*0.1, title: '转正时间', sort: true, align: 'center'}
-                ,{field:'status', width: twidth*0.1, title: '是否离职', sort: true, align: 'center'}
+                ,{field:'status', width: twidth*0.1, title: '在职状态', sort: true, align: 'center'}
                 ,{
                     width: twidth * 0.18,
                     fixed: 'right',
@@ -95,22 +95,23 @@
                                 layer.close(loadIndex);
                                 if (result.status == 0) {
                                     obj.del();
-                                    layer.alert("删除成功！");
+                                    layer.msg("删除成功！");
+                                    refreach();
                                 }else if(result.status==1){
-                                    layer.alert("删除失败！");
+                                    layer.msg("删除失败！");
                                 }else if(result.status==2){
-                                    layer.alert("请求参数异常！");
+                                    layer.msg("请求参数异常！");
                                 }else if(result.status==10){
-                                    layer.alert("请重新登录。。。");
+                                    layer.msg("请重新登录。。。");
                                     window.location.href="system/login";
                                 }else if(result.status==20){
-                                    layer.alert("你没有操作权限！");
+                                    layer.msg("你没有操作权限！");
                                 }
 
                             },
                             error: function (data) {
                                 layer.close(loadIndex);
-                                layer.alert("出现异常！请刷新页面重试");
+                                layer.msg("出现异常！请刷新页面重试");
                             }
                         });
                     });

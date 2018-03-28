@@ -1,10 +1,7 @@
 package com.hassdata.hserp.controller;
 
-import com.hassdata.hserp.po.AdministrativeData;
 import com.hassdata.hserp.po.AdministrativeReimbursement;
 import com.hassdata.hserp.service.reimbursement.ReimbursementService;
-import com.hassdata.hserp.util.FileUploadType;
-import com.hassdata.hserp.util.FileUploadUtils;
 import com.hassdata.hserp.utils.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -84,18 +81,19 @@ public class ReimbursementController {
         }
         try {
 
-            if (FileUploadUtils.processUpload(request,"/File/img",3, file, FileUploadType.getImgType())) {
-                String path = request.getAttribute("newName").toString();
+            /*if (FileUploadUtils.processUpload(request,"/File/img",3, file, FileUploadType.getImgType())) {
+                String path = request.getAdttribute("newName").toString();*/
                 AdministrativeReimbursement data = new AdministrativeReimbursement();
+                data.setId(administrativeReimbursement.getId());
                 data.setAmount(administrativeReimbursement.getAmount());
                 data.setCategory(administrativeReimbursement.getCategory());
                 data.setApprover(administrativeReimbursement.getApprover());
-                data.setImg(path);
+                //data.setImg(path);
                 data.setDetails(administrativeReimbursement.getDetails());
                 data.setCcperson(administrativeReimbursement.getCcperson());
                 data.setTime(df.format(new Date()));
                 reimbursementService.update(data);
-            }
+            //}
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,18 +109,18 @@ public class ReimbursementController {
             return ServerResponse.createByErrorMessage("参数不能为空!");
         }
         try {
-            if (FileUploadUtils.processUpload(request,"/File/img",3, file, FileUploadType.getImgType())) {
-                String path = request.getAttribute("newName").toString();
+            /*if (FileUploadUtils.processUpload(request,"/File/img",3, file, FileUploadType.getImgType())) {
+                String path = request.getAttribute("newName").toString();*/
                 AdministrativeReimbursement data = new AdministrativeReimbursement();
                 data.setAmount(administrativeReimbursement.getAmount());
                 data.setCategory(administrativeReimbursement.getCategory());
                 data.setApprover(administrativeReimbursement.getApprover());
-                data.setImg(path);
+                //data.setImg(path);
                 data.setDetails(administrativeReimbursement.getDetails());
                 data.setCcperson(administrativeReimbursement.getCcperson());
                 data.setTime(df.format(new Date()));
                 reimbursementService.save(data);
-            }
+            //}
         } catch (Exception e) {
             e.printStackTrace();
             return ServerResponse.createBySuccess("添加失败!", "上传文件格式错误，请上传.jpg，.jpeg，.gif，.bmp，.png格式的图片");

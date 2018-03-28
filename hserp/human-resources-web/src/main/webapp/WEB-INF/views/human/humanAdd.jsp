@@ -65,13 +65,13 @@
                 </select>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">工资:</label>
-            <div class="layui-input-inline">
-                <input type="text" placeholder="请输入工资" name="salary" class="layui-input" required lay-verify="required"
-                       autocomplete="off">
-            </div>
-        </div>
+        <%--<div class="layui-form-item">--%>
+            <%--<label class="layui-form-label">工资:</label>--%>
+            <%--<div class="layui-input-inline">--%>
+                <%--<input type="text" placeholder="请输入工资" name="salary" class="layui-input" required lay-verify="required"--%>
+                       <%--autocomplete="off">--%>
+            <%--</div>--%>
+        <%--</div>--%>
 
         <div class="layui-form-item">
             <label class="layui-form-label">实习时间:</label>
@@ -89,11 +89,11 @@
         </div>
 
         <%--<div class="layui-form-item">--%>
-            <%--<label class="layui-form-label">是否离职:</label>--%>
-            <%--<div class="layui-input-inline">--%>
-                <%--<input type="radio" name="status" value="0" title="是">--%>
-                <%--<input type="radio" name="status" value="1" title="否" checked>--%>
-            <%--</div>--%>
+        <%--<label class="layui-form-label">是否离职:</label>--%>
+        <%--<div class="layui-input-inline">--%>
+        <%--<input type="radio" name="status" value="0" title="是">--%>
+        <%--<input type="radio" name="status" value="1" title="否" checked>--%>
+        <%--</div>--%>
         <%--</div>--%>
 
         <div class="layui-form-item">
@@ -137,12 +137,28 @@
                     if (result.status == 0) {
                         $("#humanAdd")[0].reset();
                         window.parent.refreach();
+                        layer.msg("添加成功。");
                     }
-                    layer.msg(result.msg);
+
+                    $.post("system/performance/addAssessment",
+                        {
+                            userId: parseInt(result.msg),
+                            basics : 0,
+                            technology : 0,
+                            nontechnology : 0,
+                            customer : 0,
+                            behaviorquality : 0,
+                            development : 0,
+                            comprehensive : 0
+                        },
+                        function (result) {
+                            console.log(result);
+                        });
+
                 },
                 error: function (data) {
                     layer.close(loadIndex);
-                    alert("出现异常！");
+                    layer.msg("出现异常！");
                 }
             });
             return false; //阻止-

@@ -112,12 +112,10 @@
                     $("#woman").prop("checked", true);
                 }
 
-                if (result.data.status == 1) {
+                if (result.data.status === "已转正") {
                     $("#yes").prop("checked", true);
-
                 } else {
                     $("#no").prop("checked", true);
-
                 }
                 form.render();
 
@@ -150,7 +148,7 @@
                 },
                 error: function (data) {
                     layer.close(loadIndex);
-                    layer.alert("出现异常！");
+                    layer.msg("出现异常！");
                 }
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
